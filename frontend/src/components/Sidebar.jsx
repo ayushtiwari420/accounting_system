@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Sidebar = ({ isCollapsed: externalCollapsed, onToggle, isMobileOpen, onCloseMobile }) => {
+  const { user } = useAuth();
+  const userRole = (user?.role || "ADMIN").toUpperCase();
+
   const [internalCollapsed, setInternalCollapsed] = useState(() => {
     return localStorage.getItem("uf_sidebar_collapsed") === "true";
   });
@@ -21,15 +25,17 @@ const Sidebar = ({ isCollapsed: externalCollapsed, onToggle, isMobileOpen, onClo
     }
   };
 
-  const menuSections = [
+  const allMenuSections = [
     {
       title: "OVERVIEW",
+      roles: ["ADMIN", "ACCOUNTANT", "MANAGER", "CUSTOMER", "VENDOR"],
       items: [
         { name: "Dashboard", path: "/", icon: "fa-chart-pie" },
       ],
     },
     {
-      title: "SALES",
+      title: "SALES & BILLING",
+      roles: ["ADMIN", "ACCOUNTANT", "MANAGER", "CUSTOMER"],
       items: [
         { name: "Sales Orders", path: "/sales-orders", icon: "fa-file-signature" },
         { name: "Customer Invoices", path: "/invoices", icon: "fa-file-invoice-dollar" },
@@ -37,7 +43,8 @@ const Sidebar = ({ isCollapsed: externalCollapsed, onToggle, isMobileOpen, onClo
       ],
     },
     {
-      title: "PURCHASES",
+      title: "PURCHASES & SUPPLIES",
+      roles: ["ADMIN", "ACCOUNTANT", "MANAGER", "VENDOR"],
       items: [
         { name: "Purchase Orders", path: "/purchase-orders", icon: "fa-cart-shopping" },
         { name: "Vendor Bills", path: "/bills", icon: "fa-receipt" },
@@ -45,7 +52,8 @@ const Sidebar = ({ isCollapsed: externalCollapsed, onToggle, isMobileOpen, onClo
       ],
     },
     {
-      title: "ACCOUNTING",
+      title: "GENERAL LEDGER",
+      roles: ["ADMIN", "ACCOUNTANT", "MANAGER"],
       items: [
         { name: "Chart of Accounts", path: "/accounts", icon: "fa-sitemap" },
         { name: "Journals", path: "/journals", icon: "fa-book" },
@@ -53,26 +61,38 @@ const Sidebar = ({ isCollapsed: externalCollapsed, onToggle, isMobileOpen, onClo
       ],
     },
     {
-      title: "PLANNING",
+      title: "FINANCIAL PLANNING",
+      roles: ["ADMIN", "ACCOUNTANT", "MANAGER"],
       items: [
         { name: "Analytic Accounts", path: "/analytic-accounts", icon: "fa-layer-group" },
         { name: "Budgets", path: "/budgets", icon: "fa-calculator" },
       ],
     },
     {
-      title: "REPORTS",
+      title: "EXECUTIVE REPORTS",
+      roles: ["ADMIN", "ACCOUNTANT", "MANAGER"],
       items: [
         { name: "Financial Statements", path: "/reports", icon: "fa-chart-line" },
       ],
     },
     {
       title: "CONFIGURATION",
+      roles: ["ADMIN", "ACCOUNTANT", "MANAGER"],
       items: [
         { name: "Contacts Master", path: "/contacts", icon: "fa-address-book" },
         { name: "Products Master", path: "/products", icon: "fa-couch" },
       ],
     },
+    {
+      title: "MY ACCOUNT",
+      roles: ["CUSTOMER", "VENDOR"],
+      items: [
+        { name: "My Profile", path: "/profile", icon: "fa-user" },
+      ],
+    },
   ];
+
+  const menuSections = allMenuSections.filter((sec) => sec.roles.includes(userRole));
 
   const renderContent = (collapsedState, isMobileDrawer = false) => (
     <div className="flex flex-col h-full">
