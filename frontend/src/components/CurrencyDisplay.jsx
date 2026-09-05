@@ -23,10 +23,10 @@ const CurrencyDisplay = ({
 
   const colorClasses = {
     default: "text-slate-900",
-    blue: "text-blue-600",
-    darkblue: "text-blue-950",
-    success: "text-emerald-700",
-    danger: "text-rose-700",
+    blue: "text-[#1E3A8A]",
+    darkblue: "text-[#1E3A8A]",
+    success: "text-[#1E3A8A]",
+    danger: "text-slate-800",
     muted: "text-slate-500",
   };
 

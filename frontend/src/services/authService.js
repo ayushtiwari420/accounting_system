@@ -14,3 +14,13 @@ export const refreshToken = async (refreshTokenValue) => {
   const response = await api.post("/auth/refresh", { refreshToken: refreshTokenValue });
   return response;
 };
+
+export const requestOtp = async (data) => {
+  const response = await api.post("/auth/request-otp", data);
+  return response;
+};
+
+export const resetPassword = async (data) => {
+  const response = await api.post("/auth/reset-password", data);
+  return response;
+};

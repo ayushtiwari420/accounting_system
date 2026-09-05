@@ -33,7 +33,9 @@ api.interceptors.response.use(
       originalRequest &&
       !originalRequest._retry &&
       !originalRequest.url?.includes("/auth/login") &&
-      !originalRequest.url?.includes("/auth/refresh")
+      !originalRequest.url?.includes("/auth/refresh") &&
+      !originalRequest.url?.includes("/auth/request-otp") &&
+      !originalRequest.url?.includes("/auth/reset-password")
     ) {
       originalRequest._retry = true;
       const storedRefreshToken = localStorage.getItem("refreshToken");
@@ -70,7 +72,11 @@ api.interceptors.response.use(
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("user");
 
-      if (window.location.pathname !== "/login" && window.location.pathname !== "/register") {
+      if (
+        window.location.pathname !== "/login" &&
+        window.location.pathname !== "/register" &&
+        window.location.pathname !== "/forgot-password"
+      ) {
         window.location.href = "/login";
       }
     }

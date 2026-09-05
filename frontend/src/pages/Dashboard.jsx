@@ -379,35 +379,35 @@ const Dashboard = () => {
           </p>
         </div>
 
-        {/* Quick Transaction Action Bar */}
-        <div className="flex flex-wrap gap-2">
+        {/* Quick Transaction Action Bar - Dark Corner Wrapper */}
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 p-1.5 bg-[#1E3A8A] rounded-2xl shadow-sm shrink-0 border border-[#1E3A8A]">
           <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => setShowSaleModal(true)}
-            className="inline-flex items-center space-x-2 bg-[#1E3A8A] hover:bg-[#152e70] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-xs"
+            className="h-9 inline-flex items-center justify-center space-x-2 bg-white hover:bg-slate-100 text-[#1E3A8A] font-extrabold text-xs px-3.5 rounded-xl transition-all shadow-xs"
           >
-            <i className="fa-solid fa-bolt"></i>
+            <i className="fa-solid fa-bolt text-xs"></i>
             <span>Book Sale Transaction</span>
-          </motion.button>
-
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={() => setShowPurchaseModal(true)}
-            className="inline-flex items-center space-x-2 bg-[#1E3A8A] hover:bg-[#152e70] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-xs"
-          >
-            <i className="fa-solid fa-cart-shopping"></i>
-            <span>Book Purchase Transaction</span>
           </motion.button>
 
           <Link
             to="/reports"
-            className="inline-flex items-center space-x-2 bg-white hover:bg-slate-50 text-[#1E3A8A] font-bold text-xs px-4 py-2.5 rounded-xl transition-all border border-[#1E3A8A]"
+            className="h-9 inline-flex items-center justify-center space-x-2 bg-[#152e70] hover:bg-[#0f2254] text-white font-extrabold text-xs px-3.5 rounded-xl transition-all border border-blue-400/30 shadow-xs"
           >
-            <i className="fa-solid fa-chart-line text-[#1E3A8A]"></i>
+            <i className="fa-solid fa-chart-line text-xs text-white"></i>
             <span>View P&L Statements</span>
           </Link>
+
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setShowPurchaseModal(true)}
+            className="h-9 inline-flex items-center justify-center space-x-2 bg-white hover:bg-slate-100 text-[#1E3A8A] font-extrabold text-xs px-3.5 rounded-xl transition-all shadow-xs"
+          >
+            <i className="fa-solid fa-cart-shopping text-xs"></i>
+            <span>Book Purchase Transaction</span>
+          </motion.button>
         </div>
       </motion.div>
 
@@ -499,7 +499,7 @@ const Dashboard = () => {
           <div className="text-2xl font-black font-mono text-[#1E3A8A]">
             ₹{metrics.netProfit.toLocaleString()}
           </div>
-          <p className="text-[11px] text-slate-500 font-medium">Revenue (4000) - Expense (5000)</p>
+          <p className="text-[11px] text-slate-500 font-medium">Sales Revenue (GL 4000) - Operating Expense (GL 5000)</p>
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#1E3A8A]"></div>
         </motion.div>
       </div>
@@ -511,8 +511,8 @@ const Dashboard = () => {
             <span className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">Invoiced Revenue</span>
             <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">₹{metrics.totalRevenue.toLocaleString()}</div>
           </div>
-          <span className="p-2.5 bg-white text-[#1E3A8A] rounded-xl font-bold text-xs border border-[#1E3A8A]">
-            Account 4000
+          <span className="px-2.5 py-1 bg-slate-100 text-[#1E3A8A] rounded-lg font-mono font-extrabold text-[11px] border border-slate-200">
+            GL Code: 4000
           </span>
         </div>
 
@@ -521,8 +521,8 @@ const Dashboard = () => {
             <span className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">Billed Expenses</span>
             <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">₹{metrics.totalExpense.toLocaleString()}</div>
           </div>
-          <span className="p-2.5 bg-white text-[#1E3A8A] rounded-xl font-bold text-xs border border-[#1E3A8A]">
-            Account 5000
+          <span className="px-2.5 py-1 bg-slate-100 text-[#1E3A8A] rounded-lg font-mono font-extrabold text-[11px] border border-slate-200">
+            GL Code: 5000
           </span>
         </div>
 
@@ -531,8 +531,8 @@ const Dashboard = () => {
             <span className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">Receivables (AR)</span>
             <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">₹{metrics.arAmount.toLocaleString()}</div>
           </div>
-          <span className="p-2.5 bg-white text-[#1E3A8A] rounded-xl font-bold text-xs border border-[#1E3A8A]">
-            Uncollected
+          <span className="px-2.5 py-1 bg-slate-100 text-[#1E3A8A] rounded-lg font-mono font-extrabold text-[11px] border border-slate-200">
+            GL Code: 1100
           </span>
         </div>
 
@@ -541,8 +541,8 @@ const Dashboard = () => {
             <span className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">Payables (AP)</span>
             <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">₹{metrics.apAmount.toLocaleString()}</div>
           </div>
-          <span className="p-2.5 bg-white text-[#1E3A8A] rounded-xl font-bold text-xs border border-[#1E3A8A]">
-            Unpaid Bills
+          <span className="px-2.5 py-1 bg-slate-100 text-[#1E3A8A] rounded-lg font-mono font-extrabold text-[11px] border border-slate-200">
+            GL Code: 2000
           </span>
         </div>
       </div>

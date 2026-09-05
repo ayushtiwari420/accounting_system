@@ -91,14 +91,14 @@ const Reports = () => {
           <div className="flex items-center space-x-3">
             <button
               onClick={fetchReports}
-              className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md transition-all"
+              className="inline-flex items-center space-x-2 bg-[#1E3A8A] hover:bg-[#152e70] text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-all"
             >
               <i className="fa-solid fa-arrows-rotate"></i>
               <span>Refresh Live Data</span>
             </button>
             <button
               onClick={() => window.print()}
-              className="inline-flex items-center space-x-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md transition-all"
+              className="inline-flex items-center space-x-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-all"
             >
               <i className="fa-solid fa-print"></i>
               <span>Print Financial Report</span>
@@ -108,18 +108,18 @@ const Reports = () => {
       />
 
       {error && (
-        <div className="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm font-medium">
+        <div className="bg-slate-50 border border-slate-200 text-slate-800 px-4 py-3 rounded-xl text-sm font-medium">
           {error}
         </div>
       )}
 
       {/* Tabs Header */}
-      <div className="flex flex-wrap border-b border-slate-200 bg-white px-4 pt-2 rounded-2xl border shadow-sm gap-2">
+      <div className="flex flex-wrap border-b border-slate-200 bg-white px-4 pt-2 rounded-2xl border shadow-xs gap-2">
         <button
           onClick={() => handleTabChange("profit-loss")}
           className={`py-3 px-5 text-xs font-black uppercase tracking-wider border-b-2 transition-all ${
             activeTab === "profit-loss"
-              ? "border-blue-600 text-blue-600 font-extrabold"
+              ? "border-[#1E3A8A] text-[#1E3A8A] font-extrabold"
               : "border-transparent text-slate-500 hover:text-slate-800"
           }`}
         >
@@ -131,7 +131,7 @@ const Reports = () => {
           onClick={() => handleTabChange("balance-sheet")}
           className={`py-3 px-5 text-xs font-black uppercase tracking-wider border-b-2 transition-all ${
             activeTab === "balance-sheet"
-              ? "border-blue-600 text-blue-600 font-extrabold"
+              ? "border-[#1E3A8A] text-[#1E3A8A] font-extrabold"
               : "border-transparent text-slate-500 hover:text-slate-800"
           }`}
         >
@@ -143,7 +143,7 @@ const Reports = () => {
           onClick={() => handleTabChange("budget-performance")}
           className={`py-3 px-5 text-xs font-black uppercase tracking-wider border-b-2 transition-all ${
             activeTab === "budget-performance"
-              ? "border-blue-600 text-blue-600 font-extrabold"
+              ? "border-[#1E3A8A] text-[#1E3A8A] font-extrabold"
               : "border-transparent text-slate-500 hover:text-slate-800"
           }`}
         >
@@ -157,11 +157,11 @@ const Reports = () => {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6"
+          className="bg-white p-8 rounded-2xl border border-slate-200 shadow-xs space-y-6"
         >
           <div className="border-b border-slate-200 pb-4 text-center relative">
             <h2 className="text-xl font-black text-slate-900">URBAN FURNITURE CO.</h2>
-            <h3 className="text-xs font-extrabold text-blue-900 uppercase tracking-widest mt-0.5">
+            <h3 className="text-xs font-extrabold text-[#1E3A8A] uppercase tracking-widest mt-0.5">
               PROFIT AND LOSS STATEMENT (INCOME STATEMENT)
             </h3>
             <p className="text-xs text-slate-500 font-medium mt-1">
@@ -176,7 +176,7 @@ const Reports = () => {
                   onClick={() => setPeriodFilter(p)}
                   className={`text-[10px] font-bold px-3 py-1 rounded-full transition-all border ${
                     periodFilter === p
-                      ? "bg-blue-600 text-white border-blue-600 shadow-sm"
+                      ? "bg-[#1E3A8A] text-white border-[#1E3A8A] shadow-xs"
                       : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
                   }`}
                 >

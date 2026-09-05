@@ -7,6 +7,7 @@ import PageTransition from "../components/PageTransition.jsx";
 // Auth
 import Login from "../pages/Login.jsx";
 import Register from "../pages/auth/Register.jsx";
+import ForgotPassword from "../pages/ForgotPassword.jsx";
 
 // Core Pages
 import Dashboard from "../pages/Dashboard.jsx";
@@ -62,6 +63,7 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
 
       <Route
         path="/"
@@ -107,8 +109,9 @@ const AppRoutes = () => {
         {/* Reports */}
         <Route path="reports" element={<AnimatedPage Component={Reports} />} />
 
-        {/* User & Info */}
+        {/* User Profile & Account Settings */}
         <Route path="profile" element={<AnimatedPage Component={Profile} />} />
+        <Route path="settings" element={<AnimatedPage Component={Profile} />} />
         <Route path="forbidden" element={<AnimatedPage Component={Forbidden} />} />
         <Route path="*" element={<AnimatedPage Component={NotFound} />} />
       </Route>

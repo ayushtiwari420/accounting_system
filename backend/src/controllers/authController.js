@@ -35,3 +35,25 @@ export const refreshToken = asyncHandler(async (req, res) => {
     "Token refreshed successfully"
   );
 });
+
+export const requestOtp = asyncHandler(async (req, res) => {
+  const result = await authService.requestOtp(req.body);
+
+  return successResponse(
+    res,
+    result,
+    200,
+    result.message || "OTP sent successfully"
+  );
+});
+
+export const resetPassword = asyncHandler(async (req, res) => {
+  const result = await authService.resetPassword(req.body);
+
+  return successResponse(
+    res,
+    result,
+    200,
+    result.message || "Password updated successfully"
+  );
+});

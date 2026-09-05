@@ -38,7 +38,7 @@ const Invoices = () => {
       accessor: (row) => (
         <Link
           to={`/invoices/${row.id}`}
-          className="font-mono text-blue-600 font-extrabold hover:underline text-xs"
+          className="font-mono text-[#1E3A8A] font-extrabold hover:underline text-xs"
         >
           {row.invoice_number}
         </Link>
@@ -51,7 +51,7 @@ const Invoices = () => {
           <span className="font-bold text-slate-900 text-xs block">
             {row.contacts?.name || "N/A"}
           </span>
-          <span className="text-[10px] font-extrabold uppercase bg-emerald-50 text-emerald-800 border border-emerald-200 px-1.5 py-0.5 rounded inline-block mt-0.5">
+          <span className="text-[10px] font-extrabold uppercase bg-slate-100 text-[#1E3A8A] border border-slate-200 px-1.5 py-0.5 rounded inline-block mt-0.5">
             {row.contacts?.type || "CUSTOMER"}
           </span>
         </div>
@@ -67,7 +67,7 @@ const Invoices = () => {
             {items.map((item, idx) => (
               <div key={idx} className="flex items-center space-x-1.5 text-xs font-semibold text-slate-800">
                 <span>• {item.products?.name || item.description || "Invoiced Item"}</span>
-                <span className="text-[10px] font-mono font-bold bg-blue-50 text-blue-900 px-1.5 py-0.5 rounded border border-blue-200">
+                <span className="text-[10px] font-mono font-bold bg-slate-100 text-[#1E3A8A] px-1.5 py-0.5 rounded border border-slate-200">
                   x{Number(item.quantity)}
                 </span>
               </div>
@@ -105,7 +105,7 @@ const Invoices = () => {
     {
       header: "Paid Amount (₹)",
       accessor: (row) => (
-        <CurrencyDisplay amount={row.paid_amount} size="sm" color="success" />
+        <CurrencyDisplay amount={row.paid_amount} size="sm" color="default" />
       ),
     },
     {
@@ -117,7 +117,7 @@ const Invoices = () => {
       accessor: (row) => (
         <Link
           to={`/invoices/${row.id}`}
-          className="text-xs font-bold text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors border border-blue-200"
+          className="text-xs font-bold text-[#1E3A8A] hover:bg-[#1E3A8A] hover:text-white bg-slate-50 px-3 py-1.5 rounded-lg transition-colors border border-slate-200"
         >
           View Invoice &rarr;
         </Link>
@@ -135,7 +135,7 @@ const Invoices = () => {
         actions={
           <Link
             to="/sales-orders"
-            className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-100"
+            className="inline-flex items-center space-x-2 bg-[#1E3A8A] hover:bg-[#152e70] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-sm"
           >
             <i className="fa-solid fa-file-signature"></i>
             <span>Generate from Sales Orders</span>

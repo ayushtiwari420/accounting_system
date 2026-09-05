@@ -139,16 +139,16 @@ const InvoiceDetail = () => {
               className="inline-flex items-center space-x-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2.5 rounded-xl text-xs font-bold border border-slate-300 transition-colors"
             >
               <i className="fa-solid fa-print"></i>
-              <span>Print Invoice</span>
+              <span>Print Invoice PDF</span>
             </button>
 
             {!isFullyPaid && (
               <button
                 onClick={() => setShowPaymentModal(true)}
-                className="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-md shadow-emerald-100 transition-all"
+                className="inline-flex items-center space-x-2 bg-[#1E3A8A] hover:bg-[#152e70] text-white font-bold text-xs px-4 py-2.5 rounded-xl shadow-xs transition-all border border-[#1E3A8A]"
               >
                 <i className="fa-solid fa-money-bill-wave"></i>
-                <span>Register Customer Payment</span>
+                <span>Register Customer Receipt</span>
               </button>
             )}
           </div>

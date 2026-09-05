@@ -181,7 +181,7 @@ const Payments = () => {
       accessor: (row) => (
         <Link
           to={`/payments/${row.id}`}
-          className="font-mono text-blue-600 font-extrabold hover:underline text-xs"
+          className="font-mono text-[#1E3A8A] font-extrabold hover:underline text-xs"
         >
           {row.payment_number}
         </Link>
@@ -193,11 +193,7 @@ const Payments = () => {
         const isCustomer = Boolean(row.invoice_id || row.customer_invoices);
         return (
           <span
-            className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold ${
-              isCustomer
-                ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
-                : "bg-blue-100 text-blue-900 border border-blue-200"
-            }`}
+            className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-slate-100 text-[#1E3A8A] border border-slate-200"
           >
             {isCustomer ? "Customer Inbound" : "Vendor Outbound"}
           </span>
@@ -225,14 +221,14 @@ const Payments = () => {
       accessor: (row) => {
         if (row.customer_invoices) {
           return (
-            <Link to={`/invoices/${row.customer_invoices.id}`} className="font-mono text-blue-600 font-bold text-xs hover:underline">
+            <Link to={`/invoices/${row.customer_invoices.id}`} className="font-mono text-[#1E3A8A] font-bold text-xs hover:underline">
               {row.customer_invoices.invoice_number}
             </Link>
           );
         }
         if (row.vendor_bills) {
           return (
-            <Link to={`/bills/${row.vendor_bills.id}`} className="font-mono text-amber-700 font-bold text-xs hover:underline">
+            <Link to={`/bills/${row.vendor_bills.id}`} className="font-mono text-[#1E3A8A] font-bold text-xs hover:underline">
               {row.vendor_bills.bill_number}
             </Link>
           );
@@ -250,7 +246,7 @@ const Payments = () => {
             {items.map((item, idx) => (
               <div key={idx} className="flex items-center space-x-1.5 text-xs font-semibold text-slate-800">
                 <span>• {item.products?.name || item.description || "Settled Item"}</span>
-                <span className="text-[10px] font-mono font-bold bg-blue-50 text-blue-900 px-1.5 py-0.5 rounded border border-blue-200">
+                <span className="text-[10px] font-mono font-bold bg-slate-100 text-[#1E3A8A] px-1.5 py-0.5 rounded border border-slate-200">
                   x{Number(item.quantity)}
                 </span>
               </div>
@@ -282,7 +278,7 @@ const Payments = () => {
     {
       header: "Amount Paid (₹)",
       accessor: (row) => (
-        <CurrencyDisplay amount={row.amount} size="md" color="success" />
+        <CurrencyDisplay amount={row.amount} size="md" color="default" />
       ),
     },
     {
@@ -294,7 +290,7 @@ const Payments = () => {
       accessor: (row) => (
         <Link
           to={`/payments/${row.id}`}
-          className="text-xs font-bold text-blue-600 hover:text-blue-900 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors border border-blue-200"
+          className="text-xs font-bold text-[#1E3A8A] hover:bg-[#1E3A8A] hover:text-white bg-slate-50 px-3 py-1.5 rounded-lg transition-colors border border-slate-200"
         >
           View Voucher &rarr;
         </Link>
@@ -328,7 +324,7 @@ const Payments = () => {
       />
 
       {error && (
-        <div className="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm font-medium">
+        <div className="bg-slate-50 border border-slate-200 text-slate-800 px-4 py-3 rounded-xl text-sm font-medium">
           {error}
         </div>
       )}
@@ -362,7 +358,7 @@ const Payments = () => {
                 onClick={() => handleTypeChange("CUSTOMER")}
                 className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all ${
                   modalType === "CUSTOMER"
-                    ? "bg-emerald-600 text-white border-emerald-600 shadow"
+                    ? "bg-[#1E3A8A] text-white border-[#1E3A8A] shadow-xs"
                     : "bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100"
                 }`}
               >
@@ -373,7 +369,7 @@ const Payments = () => {
                 onClick={() => handleTypeChange("VENDOR")}
                 className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all ${
                   modalType === "VENDOR"
-                    ? "bg-blue-600 text-white border-blue-600 shadow"
+                    ? "bg-[#1E3A8A] text-white border-[#1E3A8A] shadow-xs"
                     : "bg-slate-50 text-slate-700 border-slate-300 hover:bg-slate-100"
                 }`}
               >
@@ -391,7 +387,7 @@ const Payments = () => {
                 value={paymentForm.target_id}
                 onChange={(e) => handleDocChange(e.target.value)}
                 required
-                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-semibold focus:ring-2 focus:ring-emerald-500"
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-semibold focus:ring-2 focus:ring-[#1E3A8A]"
               >
                 <option value="">Select Customer Invoice...</option>
                 {unpaidInvoices.map((inv) => {
@@ -408,7 +404,7 @@ const Payments = () => {
                 value={paymentForm.target_id}
                 onChange={(e) => handleDocChange(e.target.value)}
                 required
-                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-semibold focus:ring-2 focus:ring-blue-500"
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-semibold focus:ring-2 focus:ring-[#1E3A8A]"
               >
                 <option value="">Select Vendor Bill...</option>
                 {unpaidBills.map((b) => {
@@ -435,7 +431,7 @@ const Payments = () => {
                 value={paymentForm.amount}
                 onChange={(e) => setPaymentForm({ ...paymentForm, amount: e.target.value })}
                 placeholder="10000"
-                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-mono font-bold focus:ring-2 focus:ring-emerald-500"
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-mono font-bold focus:ring-2 focus:ring-[#1E3A8A]"
               />
             </div>
             <div>
@@ -445,7 +441,7 @@ const Payments = () => {
               <select
                 value={paymentForm.payment_method}
                 onChange={(e) => setPaymentForm({ ...paymentForm, payment_method: e.target.value })}
-                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-semibold focus:ring-2 focus:ring-emerald-500"
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-semibold focus:ring-2 focus:ring-[#1E3A8A]"
               >
                 <option value="BANK">BANK (1010 Bank Account)</option>
                 <option value="CASH">CASH (1000 Physical Cash)</option>
@@ -463,7 +459,7 @@ const Payments = () => {
               value={paymentForm.reference}
               onChange={(e) => setPaymentForm({ ...paymentForm, reference: e.target.value })}
               placeholder="e.g. Bank Transfer Ref #12345"
-              className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-semibold focus:ring-2 focus:ring-emerald-500"
+              className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-semibold focus:ring-2 focus:ring-[#1E3A8A]"
             />
           </div>
 

@@ -14,13 +14,10 @@ export const createProductService = async (data) => {
   });
 };
 
-export const getProductsService = async () => {
+export const getProductsService = async (includeInactive = false) => {
   return prisma.products.findMany({
-    where: {
-      is_active: true,
-    },
     orderBy: {
-      created_at: "desc",
+      name: "asc",
     },
   });
 };
@@ -36,13 +33,14 @@ export const updateProductService = async (id, data) => {
   if (data.name !== undefined) updateData.name = data.name;
   if (data.type !== undefined) updateData.type = data.type;
   if (data.sales_price !== undefined || data.price !== undefined) {
-    updateData.sales_price = data.sales_price ?? data.price;
+    updateData.sales_price = Number(data.sales_price ?? data.price);
   }
   if (data.purchase_price !== undefined || data.cost !== undefined || data.cost_price !== undefined) {
-    updateData.purchase_price = data.purchase_price ?? data.cost ?? data.cost_price;
+    updateData.purchase_price = Number(data.purchase_price ?? data.cost ?? data.cost_price);
   }
   if (data.category !== undefined) updateData.category = data.category;
   if (data.description !== undefined) updateData.description = data.description;
+  if (data.is_active !== undefined) updateData.is_active = Boolean(data.is_active);
 
   return prisma.products.update({
     where: { id },

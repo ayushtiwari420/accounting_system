@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as authService from "../../services/authService.js";
 import Button from "../../components/Button.jsx";
+import ParticleBackground from "../../components/ParticleBackground.jsx";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -42,15 +43,23 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 border border-gray-100">
+    <div className="min-h-screen relative flex items-center justify-center p-4 overflow-hidden select-none">
+      {/* Animated Interactive Particle Canvas Background */}
+      <ParticleBackground />
+
+      {/* Ambient Glowing Aura Blurs */}
+      <div className="absolute top-1/4 right-1/3 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
+      <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
+
+      {/* Glassmorphism Register Card */}
+      <div className="relative z-10 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-md p-8 border border-white/50 ring-1 ring-black/5">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4 shadow-lg shadow-blue-200">
-            UF
+          <div className="w-14 h-14 rounded-2xl bg-[#1E3A8A] text-white flex items-center justify-center shadow-lg shadow-blue-900/30 border border-blue-800/40 mb-4 mx-auto transition-all duration-300 hover:scale-110 hover:-rotate-3">
+            <i className="fa-solid fa-chair text-2xl opacity-95"></i>
           </div>
-          <h2 className="text-2xl font-bold text-slate-900">Create New Account</h2>
-          <p className="text-sm text-slate-500 mt-1">
-            Urban Furniture Accounting System
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Create Account</h2>
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.25em] mt-1">
+            Urban Furniture Financial ERP
           </p>
         </div>
 
