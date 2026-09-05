@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: finora-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install && npx prisma generate
+    startCommand: npx prisma db push && node prisma/seed_urban_furniture_dataset.js && node src/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
