@@ -648,15 +648,15 @@ const Dashboard = () => {
 
       {/* Real-Time Money Transactions & Bank Settlement Feed */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-200 bg-emerald-950 text-white flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-slate-200 bg-[#1E3A8A] text-white flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <span className="text-emerald-400 font-mono font-bold text-xs uppercase tracking-widest">LIVE CASHFLOW LOG</span>
-            <span className="text-emerald-500">•</span>
+            <span className="text-blue-100 font-mono font-bold text-xs uppercase tracking-widest">LIVE CASHFLOW LOG</span>
+            <span className="text-blue-200">•</span>
             <h3 className="font-black text-sm text-white uppercase tracking-wider">Real-Time Money Transactions (Bank & Cash Vouchers)</h3>
           </div>
           <Link
             to="/payments"
-            className="text-xs font-bold bg-emerald-800 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg transition-colors border border-emerald-700"
+            className="text-xs font-bold bg-white text-[#1E3A8A] hover:bg-slate-100 px-3 py-1.5 rounded-lg transition-colors"
           >
             View All Payments &rarr;
           </Link>
@@ -669,7 +669,7 @@ const Dashboard = () => {
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
                 <thead>
-                  <tr className="border-b border-emerald-100 bg-emerald-50/50 text-emerald-950 uppercase tracking-wider font-extrabold">
+                  <tr className="border-b border-slate-200 bg-slate-50 text-[#1E3A8A] uppercase tracking-wider font-extrabold">
                     <th className="py-2.5 px-3">Voucher #</th>
                     <th className="py-2.5 px-3">Transaction Flow</th>
                     <th className="py-2.5 px-3">Party / Contact</th>
@@ -686,8 +686,8 @@ const Dashboard = () => {
                     const docNumber = p.customer_invoices?.invoice_number || p.vendor_bills?.bill_number || "Direct Voucher";
 
                     return (
-                      <tr key={p.id} className="hover:bg-emerald-50/30">
-                        <td className="py-2.5 px-3 font-mono font-bold text-blue-600">
+                      <tr key={p.id} className="hover:bg-slate-50">
+                        <td className="py-2.5 px-3 font-mono font-bold text-[#1E3A8A]">
                           <Link to={`/payments/${p.id}`}>{p.payment_number}</Link>
                         </td>
                         <td className="py-2.5 px-3">
@@ -712,7 +712,7 @@ const Dashboard = () => {
                           {isInbound ? "+" : "-"}₹{Number(p.amount || 0).toLocaleString()}
                         </td>
                         <td className="py-2.5 px-3 text-center">
-                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-200 uppercase">
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-extrabold bg-[#1E3A8A] text-white uppercase">
                             ✓ SETTLED
                           </span>
                         </td>
@@ -728,15 +728,15 @@ const Dashboard = () => {
 
       {/* General Ledger Feed */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-200 bg-blue-950 text-white flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-slate-200 bg-[#1E3A8A] text-white flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <span className="text-blue-300 font-mono font-bold text-xs uppercase tracking-widest">REAL-TIME GL LOG</span>
-            <span className="text-blue-400">•</span>
+            <span className="text-blue-200 font-mono font-bold text-xs uppercase tracking-widest">REAL-TIME GL LOG</span>
+            <span className="text-blue-300">•</span>
             <h3 className="font-black text-sm text-white uppercase tracking-wider">Double-Entry Journal Postings</h3>
           </div>
           <Link
             to="/journal-entries"
-            className="text-xs font-bold bg-blue-800 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg transition-colors border border-blue-700"
+            className="text-xs font-bold bg-white text-[#1E3A8A] hover:bg-slate-100 px-3 py-1.5 rounded-lg transition-colors"
           >
             Audit All Entries &rarr;
           </Link>
