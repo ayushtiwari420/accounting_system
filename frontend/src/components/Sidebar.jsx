@@ -25,17 +25,15 @@ const Sidebar = ({ isCollapsed: externalCollapsed, onToggle, isMobileOpen, onClo
     }
   };
 
-  const allMenuSections = [
+  const menuSections = [
     {
       title: "OVERVIEW",
-      roles: ["ADMIN", "ACCOUNTANT", "MANAGER", "CUSTOMER", "VENDOR"],
       items: [
         { name: "Dashboard", path: "/", icon: "fa-chart-pie" },
       ],
     },
     {
-      title: "SALES & BILLING",
-      roles: ["ADMIN", "ACCOUNTANT", "MANAGER", "CUSTOMER"],
+      title: "SALES",
       items: [
         { name: "Sales Orders", path: "/sales-orders", icon: "fa-file-signature" },
         { name: "Customer Invoices", path: "/invoices", icon: "fa-file-invoice-dollar" },
@@ -43,8 +41,7 @@ const Sidebar = ({ isCollapsed: externalCollapsed, onToggle, isMobileOpen, onClo
       ],
     },
     {
-      title: "PURCHASES & SUPPLIES",
-      roles: ["ADMIN", "ACCOUNTANT", "MANAGER", "VENDOR"],
+      title: "PURCHASES",
       items: [
         { name: "Purchase Orders", path: "/purchase-orders", icon: "fa-cart-shopping" },
         { name: "Vendor Bills", path: "/bills", icon: "fa-receipt" },
@@ -52,8 +49,7 @@ const Sidebar = ({ isCollapsed: externalCollapsed, onToggle, isMobileOpen, onClo
       ],
     },
     {
-      title: "GENERAL LEDGER",
-      roles: ["ADMIN", "ACCOUNTANT", "MANAGER"],
+      title: "ACCOUNTING",
       items: [
         { name: "Chart of Accounts", path: "/accounts", icon: "fa-sitemap" },
         { name: "Journals", path: "/journals", icon: "fa-book" },
@@ -61,38 +57,26 @@ const Sidebar = ({ isCollapsed: externalCollapsed, onToggle, isMobileOpen, onClo
       ],
     },
     {
-      title: "FINANCIAL PLANNING",
-      roles: ["ADMIN", "ACCOUNTANT", "MANAGER"],
+      title: "PLANNING",
       items: [
         { name: "Analytic Accounts", path: "/analytic-accounts", icon: "fa-layer-group" },
         { name: "Budgets", path: "/budgets", icon: "fa-calculator" },
       ],
     },
     {
-      title: "EXECUTIVE REPORTS",
-      roles: ["ADMIN", "ACCOUNTANT", "MANAGER"],
+      title: "REPORTS",
       items: [
         { name: "Financial Statements", path: "/reports", icon: "fa-chart-line" },
       ],
     },
     {
       title: "CONFIGURATION",
-      roles: ["ADMIN", "ACCOUNTANT", "MANAGER"],
       items: [
         { name: "Contacts Master", path: "/contacts", icon: "fa-address-book" },
         { name: "Products Master", path: "/products", icon: "fa-couch" },
       ],
     },
-    {
-      title: "MY ACCOUNT",
-      roles: ["CUSTOMER", "VENDOR"],
-      items: [
-        { name: "My Profile", path: "/profile", icon: "fa-user" },
-      ],
-    },
   ];
-
-  const menuSections = allMenuSections.filter((sec) => sec.roles.includes(userRole));
 
   const renderContent = (collapsedState, isMobileDrawer = false) => (
     <div className="flex flex-col h-full">
