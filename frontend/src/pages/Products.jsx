@@ -156,7 +156,7 @@ const Products = () => {
       accessor: (row) => (
         <div>
           <span className="font-bold text-slate-900 text-sm block">{row.name}</span>
-          <span className="text-xs text-slate-500 line-clamp-1">{row.description || "Urban Furniture Item"}</span>
+          <span className="text-xs text-slate-500 line-clamp-1">{row.description || "Finora Item"}</span>
         </div>
       ),
     },

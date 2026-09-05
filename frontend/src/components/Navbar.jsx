@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import Modal from "./Modal.jsx";
 import CommandPalette from "./CommandPalette.jsx";
 
-const Navbar = () => {
+const Navbar = ({ onToggleMobileMenu }) => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
@@ -30,19 +30,30 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
-        {/* Brand Logo & Search Trigger */}
-        <div className="flex items-center space-x-6">
-          <Link to="/" className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-xl bg-[#1E3A8A] text-white flex items-center justify-center shadow-xs">
+      <header className="h-16 bg-white border-b border-slate-200 px-3 sm:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        {/* Brand Logo & Mobile Menu Hamburger & Search Trigger */}
+        <div className="flex items-center space-x-2 sm:space-x-6">
+          {/* Mobile Hamburger Menu Toggle Button */}
+          <button
+            type="button"
+            onClick={onToggleMobileMenu}
+            className="md:hidden flex items-center justify-center p-2 rounded-xl text-[#1E3A8A] hover:bg-slate-100 min-w-[44px] min-h-[44px] transition-colors"
+            title="Open Mobile Navigation Menu"
+            aria-label="Open Navigation Menu"
+          >
+            <i className="fa-solid fa-bars text-lg"></i>
+          </button>
+
+          <Link to="/" className="flex items-center space-x-2.5">
+            <div className="w-8 h-8 rounded-xl bg-[#1E3A8A] text-white flex items-center justify-center shadow-xs shrink-0">
               <i className="fa-solid fa-chair text-xs"></i>
             </div>
-            <span className="text-lg font-bold text-[#1E3A8A] tracking-tight">
-              Urban Furniture <span className="text-xs font-semibold text-slate-400 ml-1">Financial ERP</span>
+            <span className="text-[22px] font-black text-[#1E3A8A] tracking-[-0.02em] truncate max-w-[160px] sm:max-w-none">
+              FINORA <span className="hidden xs:inline text-xs font-semibold text-slate-400 ml-1 tracking-normal font-sans">ERP</span>
             </span>
           </Link>
 
-          {/* Command Palette (Ctrl + K) Search Button */}
+          {/* Command Palette (Ctrl + K) Search Button - Desktop */}
           <button
             type="button"
             onClick={() => setIsCommandPaletteOpen(true)}
@@ -58,8 +69,18 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Right Corner Controls: Quick Create + Profile Badge */}
-        <div className="flex items-center space-x-3">
+        {/* Right Corner Controls: Mobile Search + Quick Create + Profile Badge */}
+        <div className="flex items-center space-x-2 sm:space-x-3">
+          {/* Mobile Search Button */}
+          <button
+            type="button"
+            onClick={() => setIsCommandPaletteOpen(true)}
+            className="md:hidden flex items-center justify-center p-2 rounded-xl bg-slate-100 text-slate-600 hover:bg-slate-200 min-w-[44px] min-h-[44px] transition-colors"
+            title="Quick Search"
+            aria-label="Quick Search"
+          >
+            <i className="fa-solid fa-magnifying-glass text-sm"></i>
+          </button>
           {/* + Quick Create Dropdown Button */}
           <div className="relative">
             <button
@@ -235,7 +256,7 @@ const Navbar = () => {
             <div className="space-y-1">
               <h4 className="text-lg font-black text-slate-900">Are you sure you want to log out?</h4>
               <p className="text-xs font-medium text-slate-500">
-                You will be signed out of your current session on Urban Furniture ERP. You will need your credentials to log back in.
+                You will be signed out of your current session on Finora ERP. You will need your credentials to log back in.
               </p>
             </div>
 

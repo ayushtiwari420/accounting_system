@@ -18,7 +18,7 @@ const Profile = () => {
     mobile: "+91 98765 43210",
     city: "Mumbai",
     state: "Maharashtra",
-    company: "Urban Furniture Pvt Ltd",
+    company: "Finora Financial Systems Pvt Ltd",
   });
 
   const [passwordForm, setPasswordForm] = useState({
@@ -169,7 +169,7 @@ const Profile = () => {
               </div>
               <div>
                 <h2 className="text-2xl font-black text-slate-900">{user?.name || "System Administrator"}</h2>
-                <p className="text-xs font-semibold text-slate-500 mt-0.5">{user?.email || "admin@urbanfurniture.com"}</p>
+                <p className="text-xs font-semibold text-slate-500 mt-0.5">{user?.email || "admin@finora.com"}</p>
                 <div className="flex items-center space-x-2 mt-2">
                   <span className="bg-[#1E3A8A] text-white text-[10px] font-black uppercase px-2.5 py-0.5 rounded">
                     ROLE: {user?.role || "ADMIN"}

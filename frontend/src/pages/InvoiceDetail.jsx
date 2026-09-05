@@ -196,7 +196,7 @@ const InvoiceDetail = () => {
         <div className="flex justify-between items-start border-b border-slate-200 pb-6">
           <div>
             <span className="text-xs font-black text-blue-900 uppercase tracking-widest block">CUSTOMER INVOICE</span>
-            <h2 className="text-2xl font-black text-blue-950">URBAN FURNITURE CO.</h2>
+            <h2 className="text-2xl font-black text-blue-950">FINORA ERP CO.</h2>
             <p className="text-xs text-slate-500 font-medium">Financial Accounting & Operational ERP System</p>
           </div>
           <div className="text-right">

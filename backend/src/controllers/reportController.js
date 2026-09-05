@@ -3,8 +3,9 @@ import asyncHandler from "../utils/asyncHandler.js";
 import successResponse from "../utils/response.js";
 
 export const getProfitAndLoss = asyncHandler(async (req, res) => {
-  const { start_date, end_date } = req.query;
-  const report = await reportService.getProfitAndLoss(start_date, end_date);
+  const { start_date, end_date, preset, period } = req.query;
+  const periodPreset = preset || period || "all";
+  const report = await reportService.getProfitAndLoss(start_date, end_date, periodPreset);
   return successResponse(res, report);
 });
 

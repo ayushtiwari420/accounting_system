@@ -39,7 +39,7 @@ app.use("/api/reports", reportRoutes);
 app.get("/", (req, res) => {
   res.json({
     success: true,
-    message: "Urban Furniture Accounting API is running",
+    message: "Finora Financial ERP API is running",
   });
 });
 

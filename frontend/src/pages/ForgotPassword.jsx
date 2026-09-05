@@ -99,7 +99,7 @@ const ForgotPassword = () => {
       <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none animate-pulse"></div>
 
       {/* Glassmorphism Auth Card */}
-      <div className="relative z-10 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-md p-8 border border-white/50 ring-1 ring-black/5">
+      <div className="relative z-10 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-md p-5 sm:p-8 border border-white/50 ring-1 ring-black/5">
         <div className="text-center mb-8">
           <div className="w-14 h-14 rounded-2xl bg-[#1E3A8A] text-white flex items-center justify-center shadow-lg shadow-blue-900/30 border border-blue-800/40 mb-4 mx-auto transition-all duration-300 hover:scale-110">
             <i className="fa-solid fa-envelope-open-text text-2xl opacity-95"></i>
@@ -145,7 +145,7 @@ const ForgotPassword = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                  placeholder="admin@urbanfurniture.com"
+                  placeholder="admin@finora.com"
                 />
               </div>
             </div>

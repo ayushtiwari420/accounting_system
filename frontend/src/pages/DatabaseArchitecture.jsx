@@ -158,7 +158,7 @@ const SCHEMA_METADATA = [
   {
     table: "products",
     domain: "MASTER DATA & SECURITY",
-    description: "Urban Furniture Product Catalog (Office Chairs, Ergonomic Desks, Executive Tables).",
+    description: "Finora Product Catalog (Office Chairs, Ergonomic Desks, Executive Tables).",
     primaryKey: "id (UUID)",
     foreignKeys: [],
     columns: [

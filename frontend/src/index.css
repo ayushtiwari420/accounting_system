@@ -1,38 +1,190 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;700;900&display=swap');
 
-body, input, button, select, textarea {
-  font-family: 'Inter', sans-serif;
+* {
+  box-sizing: border-box;
 }
 
-/* Typography Hierarchy Enforcement */
+body {
+  margin: 0;
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+  color: #0f172a;
+  background: #f8fafc;
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+body, input, button, select, textarea, table {
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+/* Enable Lining & Tabular Numerals for Financial Data & Reports */
+.tabular-nums {
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+}
+
+/* ==========================================================================
+   FINORA ERP TYPOGRAPHY SYSTEM
+   ========================================================================== */
+
+/* Brand Typography */
+.brand-text {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+/* Page Hierarchy */
 .page-title {
-  font-size: 32px;
+  font-size: 28px;
+  line-height: 36px;
   font-weight: 700;
-  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #64748b;
 }
 
 .section-heading {
   font-size: 20px;
-  font-weight: 600;
+  line-height: 28px;
+  font-weight: 700;
+  color: #0f172a;
 }
 
-.sub-heading {
+.card-heading {
   font-size: 16px;
-  font-weight: 600;
+  line-height: 24px;
+  font-weight: 700;
+  color: #0f172a;
 }
 
+/* Body & Text Content */
 .body-text {
   font-size: 14px;
+  line-height: 20px;
   font-weight: 400;
-  line-height: 1.5;
+  color: #0f172a;
 }
 
 .secondary-text {
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 400;
+  color: #64748b;
+}
+
+/* Financial Amounts & KPIs */
+.financial-kpi {
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.financial-amount {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.report-total {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.report-major-result {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Data Tables */
+.table-header {
   font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.table-data {
+  font-size: 14px;
+  line-height: 20px;
   font-weight: 400;
 }
 
-/* Custom scrollbar and global helper utility classes */
+.table-data-important {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+/* Form Controls & Action Elements */
+.btn-text {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 700;
+}
+
+.form-label {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.form-input {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.status-badge-text {
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Sidebar Specific Typography */
+.sidebar-brand {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.sidebar-nav-item {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.sidebar-section-label {
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #94a3b8;
+}
+
+/* Custom scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;

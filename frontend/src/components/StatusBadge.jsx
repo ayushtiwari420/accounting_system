@@ -34,11 +34,11 @@ const StatusBadge = ({ status = "DRAFT", size = "normal" }) => {
   const label = labels[normalized] || normalized;
 
   const sizeClass =
-    size === "sm" ? "px-2 py-0.5 text-[10px]" : "px-2.5 py-1 text-xs";
+    size === "sm" ? "px-2 py-0.5 text-[11px] leading-[16px]" : "px-2.5 py-1 text-[11px] leading-[16px]";
 
   return (
     <span
-      className={`inline-flex items-center font-bold tracking-wide rounded-md border uppercase ${sizeClass} ${style}`}
+      className={`inline-flex items-center font-bold tracking-[0.02em] rounded-md border uppercase ${sizeClass} ${style}`}
     >
       <span className="w-1.5 h-1.5 rounded-full mr-1.5 fill-current opacity-75 bg-current"></span>
       {label}

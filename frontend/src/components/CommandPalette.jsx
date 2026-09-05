@@ -138,7 +138,7 @@ const CommandPalette = ({ isOpen, onClose }) => {
               <span><kbd className="font-mono bg-white px-1.5 py-0.5 rounded border border-slate-200 font-bold text-slate-700">↑↓</kbd> Navigate</span>
               <span><kbd className="font-mono bg-white px-1.5 py-0.5 rounded border border-slate-200 font-bold text-slate-700">↵</kbd> Select</span>
             </div>
-            <span>Urban Furniture ERP Command Palette</span>
+            <span>Finora ERP Command Palette</span>
           </div>
         </div>
       </div>

@@ -57,9 +57,9 @@ const Register = () => {
           <div className="w-14 h-14 rounded-2xl bg-[#1E3A8A] text-white flex items-center justify-center shadow-lg shadow-blue-900/30 border border-blue-800/40 mb-4 mx-auto transition-all duration-300 hover:scale-110 hover:-rotate-3">
             <i className="fa-solid fa-chair text-2xl opacity-95"></i>
           </div>
-          <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Create Account</h2>
+          <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Finora</h2>
           <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.25em] mt-1">
-            Urban Furniture Financial ERP
+            Financial Accounting ERP
           </p>
         </div>
 
@@ -111,7 +111,7 @@ const Register = () => {
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                placeholder="user@urbanfurniture.com"
+                placeholder="user@finora.com"
               />
             </div>
           </div>

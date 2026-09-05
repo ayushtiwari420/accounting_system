@@ -1,33 +1,57 @@
 import prisma from "../config/prisma.js";
 
-export const getProfitAndLoss = async (startDate, endDate) => {
+export const getProfitAndLoss = async (startDate, endDate, periodPreset = "all") => {
+  let computedStartDate = startDate ? new Date(startDate) : null;
+  let computedEndDate = endDate ? new Date(endDate) : null;
+
+  const now = new Date();
+  if (periodPreset === "1m") {
+    computedStartDate = new Date(now.valueOf() - 30 * 24 * 60 * 60 * 1000);
+    computedEndDate = now;
+  } else if (periodPreset === "6m") {
+    computedStartDate = new Date(now.valueOf() - 180 * 24 * 60 * 60 * 1000);
+    computedEndDate = now;
+  } else if (periodPreset === "1y") {
+    computedStartDate = new Date(now.valueOf() - 365 * 24 * 60 * 60 * 1000);
+    computedEndDate = now;
+  }
+
   const whereClause = {
     journal_entries: {
       status: "POSTED",
     },
   };
 
-  if (startDate || endDate) {
+  if (computedStartDate || computedEndDate) {
     whereClause.journal_entries.entry_date = {};
-    if (startDate) whereClause.journal_entries.entry_date.gte = new Date(startDate);
-    if (endDate) whereClause.journal_entries.entry_date.lte = new Date(endDate);
+    if (computedStartDate) whereClause.journal_entries.entry_date.gte = computedStartDate;
+    if (computedEndDate) whereClause.journal_entries.entry_date.lte = computedEndDate;
   }
 
   const lines = await prisma.journal_entry_lines.findMany({
     where: whereClause,
     include: {
       accounts: true,
+      journal_entries: true,
+    },
+    orderBy: {
+      journal_entries: {
+        entry_date: "desc",
+      },
     },
   });
 
   const incomeAccountsMap = {};
   const expenseAccountsMap = {};
+  const transactionLogs = [];
+  let cogsAmount = 0;
 
   for (const line of lines) {
     const acc = line.accounts;
     const type = acc.type.toUpperCase();
     const debit = Number(line.debit || 0);
     const credit = Number(line.credit || 0);
+    const je = line.journal_entries;
 
     if (type === "INCOME") {
       if (!incomeAccountsMap[acc.id]) {
@@ -38,7 +62,23 @@ export const getProfitAndLoss = async (startDate, endDate) => {
           amount: 0,
         };
       }
-      incomeAccountsMap[acc.id].amount += credit - debit;
+      const net = credit - debit;
+      incomeAccountsMap[acc.id].amount += net;
+
+      transactionLogs.push({
+        id: line.id,
+        entry_date: je.entry_date,
+        entry_number: je.entry_number,
+        reference: je.reference || "N/A",
+        source_type: je.source_type,
+        account_code: acc.code,
+        account_name: acc.name,
+        account_type: "INCOME",
+        debit,
+        credit,
+        net_amount: net,
+        description: line.description || `Revenue transaction (${je.reference || je.entry_number})`,
+      });
     } else if (type === "EXPENSE") {
       if (!expenseAccountsMap[acc.id]) {
         expenseAccountsMap[acc.id] = {
@@ -48,7 +88,26 @@ export const getProfitAndLoss = async (startDate, endDate) => {
           amount: 0,
         };
       }
-      expenseAccountsMap[acc.id].amount += debit - credit;
+      const net = debit - credit;
+      expenseAccountsMap[acc.id].amount += net;
+      if (acc.code === "5000" || acc.name.toLowerCase().includes("purchase") || acc.name.toLowerCase().includes("cost")) {
+        cogsAmount += net;
+      }
+
+      transactionLogs.push({
+        id: line.id,
+        entry_date: je.entry_date,
+        entry_number: je.entry_number,
+        reference: je.reference || "N/A",
+        source_type: je.source_type,
+        account_code: acc.code,
+        account_name: acc.name,
+        account_type: "EXPENSE",
+        debit,
+        credit,
+        net_amount: net,
+        description: line.description || `Expense transaction (${je.reference || je.entry_number})`,
+      });
     }
   }
 
@@ -64,17 +123,42 @@ export const getProfitAndLoss = async (startDate, endDate) => {
     0
   );
   const netProfit = totalIncome - totalExpense;
+  const grossProfit = totalIncome - cogsAmount;
+
+  const netProfitMarginPercent =
+    totalIncome > 0 ? Number(((netProfit / totalIncome) * 100).toFixed(2)) : 0;
+  const grossProfitMarginPercent =
+    totalIncome > 0 ? Number(((grossProfit / totalIncome) * 100).toFixed(2)) : 0;
+
+  const periodLabelMap = {
+    "1m": "Last 1 Month (30 Days)",
+    "6m": "Last 6 Months (180 Days)",
+    "1y": "Last 1 Year (365 Days)",
+    "all": "All Time Historical",
+  };
 
   return {
     period: {
-      start_date: startDate || "All Time",
-      end_date: endDate || "All Time",
+      preset: periodPreset,
+      label: periodLabelMap[periodPreset] || "Custom Period",
+      start_date: computedStartDate ? computedStartDate.toISOString().split("T")[0] : "All Time",
+      end_date: computedEndDate ? computedEndDate.toISOString().split("T")[0] : "All Time",
+    },
+    metrics: {
+      total_income: totalIncome,
+      total_expense: totalExpense,
+      cogs_amount: cogsAmount,
+      gross_profit: grossProfit,
+      net_profit: netProfit,
+      gross_profit_margin_percent: grossProfitMarginPercent,
+      net_profit_margin_percent: netProfitMarginPercent,
     },
     income_breakdown: incomeBreakdown,
     total_income: totalIncome,
     expense_breakdown: expenseBreakdown,
     total_expense: totalExpense,
     net_profit: netProfit,
+    transaction_logs: transactionLogs,
   };
 };
 

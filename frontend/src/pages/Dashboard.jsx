@@ -373,7 +373,7 @@ const Dashboard = () => {
               {isContactUser ? "BUSINESS OVERVIEW & TRANSACTIONS" : "EXECUTIVE COMMAND CENTER"}
             </span>
           </div>
-          <h1 className="text-[32px] font-bold leading-[1.2] text-[#1E3A8A]">Urban Furniture ERP Overview</h1>
+          <h1 className="text-[32px] font-bold leading-[1.2] text-[#1E3A8A]">Finora ERP Overview</h1>
           <p className="text-sm font-normal text-slate-500 mt-1">
             Real-time business operations, double-entry ledgers, and live transaction booking studio.
           </p>
@@ -448,7 +448,7 @@ const Dashboard = () => {
             <span className="text-xs font-bold uppercase tracking-wider">Money Inflow (Collected)</span>
             <i className="fa-solid fa-arrow-down-left text-white text-base"></i>
           </div>
-          <div className="text-2xl font-black text-white font-mono">
+          <div className="text-[28px] leading-[36px] font-black text-white tabular-nums tracking-[-0.02em]">
             ₹{metrics.totalMoneyCollected.toLocaleString()}
           </div>
           <p className="text-[11px] text-blue-100 font-medium">Actual Customer Cash & Bank Payments</p>
@@ -464,7 +464,7 @@ const Dashboard = () => {
             <span className="text-xs font-bold uppercase tracking-wider">Money Outflow (Disbursed)</span>
             <i className="fa-solid fa-arrow-up-right text-[#1E3A8A] text-base"></i>
           </div>
-          <div className="text-2xl font-black text-[#1E3A8A] font-mono">
+          <div className="text-[28px] leading-[36px] font-black text-[#1E3A8A] tabular-nums tracking-[-0.02em]">
             ₹{metrics.totalMoneyDisbursed.toLocaleString()}
           </div>
           <p className="text-[11px] text-slate-500 font-medium">Actual Vendor Cash & Bank Disbursements</p>
@@ -480,7 +480,7 @@ const Dashboard = () => {
             <span className="text-xs font-bold uppercase tracking-wider">Liquid Funds (Bank & Cash)</span>
             <i className="fa-solid fa-wallet text-white text-base"></i>
           </div>
-          <div className="text-2xl font-black text-white font-mono">
+          <div className="text-[28px] leading-[36px] font-black text-white tabular-nums tracking-[-0.02em]">
             ₹{metrics.bankCashLiquidBalance.toLocaleString()}
           </div>
           <p className="text-[11px] text-blue-100 font-medium">1000 Cash + 1010 Bank Account Funds</p>
@@ -496,7 +496,7 @@ const Dashboard = () => {
             <span className="text-xs font-bold uppercase tracking-wider">Net Operating Profit</span>
             <i className="fa-solid fa-scale-balanced text-[#1E3A8A] text-base"></i>
           </div>
-          <div className="text-2xl font-black font-mono text-[#1E3A8A]">
+          <div className="text-[28px] leading-[36px] font-black text-[#1E3A8A] tabular-nums tracking-[-0.02em]">
             ₹{metrics.netProfit.toLocaleString()}
           </div>
           <p className="text-[11px] text-slate-500 font-medium">Sales Revenue (GL 4000) - Operating Expense (GL 5000)</p>
