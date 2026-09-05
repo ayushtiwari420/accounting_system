@@ -20,10 +20,9 @@ async function seedRealWorldDataset() {
 
   const passwordHash = await bcrypt.hash("Admin@123", 10);
 
-  // 1. CLEAN UP EXISTING TRANSACTIONS & MASTER DATA SAFELY
+  // 1. CLEAN UP EXISTING TRANSACTIONS & MASTER DATA SAFELY IN FOREIGN KEY ORDER
   console.log("🧹 Clearing old mock transactions...");
   await prisma.payments.deleteMany({});
-  await prisma.journal_entry_lines.deleteMany({});
   await prisma.customer_invoice_items.deleteMany({});
   await prisma.customer_invoices.deleteMany({});
   await prisma.vendor_bill_items.deleteMany({});
@@ -32,6 +31,7 @@ async function seedRealWorldDataset() {
   await prisma.sales_orders.deleteMany({});
   await prisma.purchase_order_items.deleteMany({});
   await prisma.purchase_orders.deleteMany({});
+  await prisma.journal_entry_lines.deleteMany({});
   await prisma.journal_entries.deleteMany({});
   await prisma.budgets.deleteMany({});
   await prisma.analytic_accounts.deleteMany({});
