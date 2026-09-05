@@ -1,15 +1,15 @@
 import "dotenv/config";
+import pg from "pg";
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcryptjs";
 
-const adapter = new PrismaPg({
+const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
-const prisma = new PrismaClient({
-  adapter,
-});
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 async function seedRealWorldDataset() {
   console.log("🚀 Seeding Real-World Urban Furniture Accounting Dataset into PostgreSQL Database...");
