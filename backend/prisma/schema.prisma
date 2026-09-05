@@ -1,0 +1,359 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model accounts {
+  id                                                    String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  code                                                  String                @unique @db.VarChar(20)
+  name                                                  String                @db.VarChar(150)
+  type                                                  String                @db.VarChar(20)
+  parent_id                                             String?               @db.Uuid
+  is_active                                             Boolean               @default(true)
+  created_at                                            DateTime              @default(now()) @db.Timestamp(6)
+  updated_at                                            DateTime              @default(now()) @db.Timestamp(6)
+  accounts                                              accounts?             @relation("accountsToaccounts", fields: [parent_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  other_accounts                                        accounts[]            @relation("accountsToaccounts")
+  journal_entry_lines                                   journal_entry_lines[]
+  journals_journals_default_credit_account_idToaccounts journals[]            @relation("journals_default_credit_account_idToaccounts")
+  journals_journals_default_debit_account_idToaccounts  journals[]            @relation("journals_default_debit_account_idToaccounts")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model analytic_accounts {
+  id                  String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                String                @db.VarChar(150)
+  type                String                @db.VarChar(20)
+  is_active           Boolean               @default(true)
+  created_at          DateTime              @default(now()) @db.Timestamp(6)
+  budgets             budgets[]
+  journal_entry_lines journal_entry_lines[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model budgets {
+  id                  String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                String            @db.VarChar(150)
+  analytic_account_id String            @db.Uuid
+  responsible_user_id String?           @db.Uuid
+  start_date          DateTime          @db.Date
+  end_date            DateTime          @db.Date
+  planned_amount      Decimal           @db.Decimal(15, 2)
+  created_at          DateTime          @default(now()) @db.Timestamp(6)
+  updated_at          DateTime          @default(now()) @db.Timestamp(6)
+  analytic_accounts   analytic_accounts @relation(fields: [analytic_account_id], references: [id], onUpdate: NoAction)
+  users               users?            @relation(fields: [responsible_user_id], references: [id], onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model contacts {
+  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name              String              @db.VarChar(150)
+  type              String              @db.VarChar(20)
+  email             String?             @db.VarChar(255)
+  mobile            String?             @db.VarChar(30)
+  address           String?
+  city              String?             @db.VarChar(100)
+  state             String?             @db.VarChar(100)
+  pincode           String?             @db.VarChar(20)
+  profile_image     String?
+  user_id           String?             @db.Uuid
+  is_active         Boolean             @default(true)
+  created_at        DateTime            @default(now()) @db.Timestamp(6)
+  updated_at        DateTime            @default(now()) @db.Timestamp(6)
+  users             users?              @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+  customer_invoices customer_invoices[]
+  purchase_orders   purchase_orders[]
+  sales_orders      sales_orders[]
+  vendor_bills      vendor_bills[]
+
+  @@index([type], map: "idx_contacts_type")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model customer_invoice_items {
+  id                String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  invoice_id        String            @db.Uuid
+  product_id        String            @db.Uuid
+  description       String?
+  quantity          Decimal           @db.Decimal(15, 3)
+  unit_price        Decimal           @db.Decimal(15, 2)
+  tax_id            String?           @db.Uuid
+  tax_amount        Decimal           @default(0) @db.Decimal(15, 2)
+  line_total        Decimal           @default(0) @db.Decimal(15, 2)
+  customer_invoices customer_invoices @relation(fields: [invoice_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  products          products          @relation(fields: [product_id], references: [id], onUpdate: NoAction)
+  taxes             taxes?            @relation(fields: [tax_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model customer_invoices {
+  id                     String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  invoice_number         String                   @unique @db.VarChar(50)
+  customer_id            String                   @db.Uuid
+  sales_order_id         String?                  @db.Uuid
+  invoice_date           DateTime                 @default(dbgenerated("CURRENT_DATE")) @db.Date
+  due_date               DateTime                 @db.Date
+  subtotal               Decimal                  @default(0) @db.Decimal(15, 2)
+  tax_amount             Decimal                  @default(0) @db.Decimal(15, 2)
+  total_amount           Decimal                  @default(0) @db.Decimal(15, 2)
+  paid_amount            Decimal                  @default(0) @db.Decimal(15, 2)
+  status                 String                   @default("DRAFT") @db.VarChar(20)
+  journal_entry_id       String?                  @db.Uuid
+  created_at             DateTime                 @default(now()) @db.Timestamp(6)
+  updated_at             DateTime                 @default(now()) @db.Timestamp(6)
+  customer_invoice_items customer_invoice_items[]
+  contacts               contacts                 @relation(fields: [customer_id], references: [id], onUpdate: NoAction)
+  journal_entries        journal_entries?         @relation(fields: [journal_entry_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  sales_orders           sales_orders?            @relation(fields: [sales_order_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  payments               payments[]
+
+  @@index([customer_id], map: "idx_customer_invoices_customer")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model journal_entries {
+  id                  String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  journal_id          String                @db.Uuid
+  entry_number        String                @unique @db.VarChar(50)
+  entry_date          DateTime              @default(dbgenerated("CURRENT_DATE")) @db.Date
+  reference           String?               @db.VarChar(255)
+  source_type         String                @db.VarChar(30)
+  source_id           String?               @db.Uuid
+  status              String                @default("DRAFT") @db.VarChar(20)
+  created_by          String?               @db.Uuid
+  posted_at           DateTime?             @db.Timestamp(6)
+  created_at          DateTime              @default(now()) @db.Timestamp(6)
+  customer_invoices   customer_invoices[]
+  users               users?                @relation(fields: [created_by], references: [id], onUpdate: NoAction)
+  journals            journals              @relation(fields: [journal_id], references: [id], onUpdate: NoAction)
+  journal_entry_lines journal_entry_lines[]
+  payments            payments[]
+  vendor_bills        vendor_bills[]
+
+  @@index([entry_date], map: "idx_journal_entries_date")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model journal_entry_lines {
+  id                  String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  journal_entry_id    String             @db.Uuid
+  account_id          String             @db.Uuid
+  analytic_account_id String?            @db.Uuid
+  description         String?
+  debit               Decimal            @default(0) @db.Decimal(15, 2)
+  credit              Decimal            @default(0) @db.Decimal(15, 2)
+  accounts            accounts           @relation(fields: [account_id], references: [id], onUpdate: NoAction)
+  analytic_accounts   analytic_accounts? @relation(fields: [analytic_account_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  journal_entries     journal_entries    @relation(fields: [journal_entry_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([account_id], map: "idx_journal_entry_lines_account")
+  @@index([analytic_account_id], map: "idx_journal_entry_lines_analytic")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model journals {
+  id                                                    String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                                                  String            @db.VarChar(100)
+  type                                                  String            @db.VarChar(20)
+  code                                                  String            @unique @db.VarChar(20)
+  default_debit_account_id                              String?           @db.Uuid
+  default_credit_account_id                             String?           @db.Uuid
+  is_active                                             Boolean           @default(true)
+  created_at                                            DateTime          @default(now()) @db.Timestamp(6)
+  journal_entries                                       journal_entries[]
+  accounts_journals_default_credit_account_idToaccounts accounts?         @relation("journals_default_credit_account_idToaccounts", fields: [default_credit_account_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  accounts_journals_default_debit_account_idToaccounts  accounts?         @relation("journals_default_debit_account_idToaccounts", fields: [default_debit_account_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  payments                                              payments[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model payments {
+  id                String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  payment_number    String             @unique @db.VarChar(50)
+  invoice_id        String?            @db.Uuid
+  bill_id           String?            @db.Uuid
+  journal_id        String             @db.Uuid
+  amount            Decimal            @db.Decimal(15, 2)
+  payment_date      DateTime           @default(dbgenerated("CURRENT_DATE")) @db.Date
+  payment_method    String             @db.VarChar(20)
+  reference         String?            @db.VarChar(255)
+  status            String             @default("POSTED") @db.VarChar(20)
+  journal_entry_id  String?            @db.Uuid
+  created_by        String?            @db.Uuid
+  created_at        DateTime           @default(now()) @db.Timestamp(6)
+  vendor_bills      vendor_bills?      @relation(fields: [bill_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  users             users?             @relation(fields: [created_by], references: [id], onUpdate: NoAction)
+  customer_invoices customer_invoices? @relation(fields: [invoice_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  journal_entries   journal_entries?   @relation(fields: [journal_entry_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  journals          journals           @relation(fields: [journal_id], references: [id], onUpdate: NoAction)
+
+  @@index([bill_id], map: "idx_payments_bill")
+  @@index([invoice_id], map: "idx_payments_invoice")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model products {
+  id                     String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                   String                   @db.VarChar(150)
+  type                   String                   @db.VarChar(20)
+  sales_price            Decimal                  @default(0) @db.Decimal(15, 2)
+  purchase_price         Decimal                  @default(0) @db.Decimal(15, 2)
+  category               String?                  @db.VarChar(100)
+  description            String?
+  is_active              Boolean                  @default(true)
+  created_at             DateTime                 @default(now()) @db.Timestamp(6)
+  updated_at             DateTime                 @default(now()) @db.Timestamp(6)
+  customer_invoice_items customer_invoice_items[]
+  purchase_order_items   purchase_order_items[]
+  sales_order_items      sales_order_items[]
+  vendor_bill_items      vendor_bill_items[]
+
+  @@index([category], map: "idx_products_category")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model purchase_order_items {
+  id                String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  purchase_order_id String          @db.Uuid
+  product_id        String          @db.Uuid
+  quantity          Decimal         @db.Decimal(15, 3)
+  unit_price        Decimal         @db.Decimal(15, 2)
+  tax_id            String?         @db.Uuid
+  tax_amount        Decimal         @default(0) @db.Decimal(15, 2)
+  line_total        Decimal         @default(0) @db.Decimal(15, 2)
+  products          products        @relation(fields: [product_id], references: [id], onUpdate: NoAction)
+  purchase_orders   purchase_orders @relation(fields: [purchase_order_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  taxes             taxes?          @relation(fields: [tax_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model purchase_orders {
+  id                   String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  order_number         String                 @unique @db.VarChar(50)
+  vendor_id            String                 @db.Uuid
+  order_date           DateTime               @default(dbgenerated("CURRENT_DATE")) @db.Date
+  status               String                 @default("DRAFT") @db.VarChar(20)
+  subtotal             Decimal                @default(0) @db.Decimal(15, 2)
+  tax_amount           Decimal                @default(0) @db.Decimal(15, 2)
+  total_amount         Decimal                @default(0) @db.Decimal(15, 2)
+  created_by           String?                @db.Uuid
+  created_at           DateTime               @default(now()) @db.Timestamp(6)
+  updated_at           DateTime               @default(now()) @db.Timestamp(6)
+  purchase_order_items purchase_order_items[]
+  users                users?                 @relation(fields: [created_by], references: [id], onUpdate: NoAction)
+  contacts             contacts               @relation(fields: [vendor_id], references: [id], onUpdate: NoAction)
+  vendor_bills         vendor_bills[]
+
+  @@index([vendor_id], map: "idx_purchase_orders_vendor")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model sales_order_items {
+  id             String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  sales_order_id String       @db.Uuid
+  product_id     String       @db.Uuid
+  quantity       Decimal      @db.Decimal(15, 3)
+  unit_price     Decimal      @db.Decimal(15, 2)
+  tax_id         String?      @db.Uuid
+  tax_amount     Decimal      @default(0) @db.Decimal(15, 2)
+  line_total     Decimal      @default(0) @db.Decimal(15, 2)
+  products       products     @relation(fields: [product_id], references: [id], onUpdate: NoAction)
+  sales_orders   sales_orders @relation(fields: [sales_order_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  taxes          taxes?       @relation(fields: [tax_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model sales_orders {
+  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  order_number      String              @unique @db.VarChar(50)
+  customer_id       String              @db.Uuid
+  order_date        DateTime            @default(dbgenerated("CURRENT_DATE")) @db.Date
+  status            String              @default("DRAFT") @db.VarChar(20)
+  subtotal          Decimal             @default(0) @db.Decimal(15, 2)
+  tax_amount        Decimal             @default(0) @db.Decimal(15, 2)
+  total_amount      Decimal             @default(0) @db.Decimal(15, 2)
+  created_by        String?             @db.Uuid
+  created_at        DateTime            @default(now()) @db.Timestamp(6)
+  updated_at        DateTime            @default(now()) @db.Timestamp(6)
+  customer_invoices customer_invoices[]
+  sales_order_items sales_order_items[]
+  users             users?              @relation(fields: [created_by], references: [id], onUpdate: NoAction)
+  contacts          contacts            @relation(fields: [customer_id], references: [id], onUpdate: NoAction)
+
+  @@index([customer_id], map: "idx_sales_orders_customer")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model taxes {
+  id                     String                   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name                   String                   @unique @db.VarChar(100)
+  rate                   Decimal                  @db.Decimal(5, 2)
+  is_active              Boolean                  @default(true)
+  created_at             DateTime                 @default(now()) @db.Timestamp(6)
+  customer_invoice_items customer_invoice_items[]
+  purchase_order_items   purchase_order_items[]
+  sales_order_items      sales_order_items[]
+  vendor_bill_items      vendor_bill_items[]
+}
+
+model users {
+  id              String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name            String            @db.VarChar(100)
+  email           String            @unique @db.VarChar(255)
+  password_hash   String
+  role            String            @default("ACCOUNTANT") @db.VarChar(20)
+  is_active       Boolean           @default(true)
+  created_at      DateTime          @default(now()) @db.Timestamp(6)
+  updated_at      DateTime          @default(now()) @db.Timestamp(6)
+  budgets         budgets[]
+  contacts        contacts[]
+  journal_entries journal_entries[]
+  payments        payments[]
+  purchase_orders purchase_orders[]
+  sales_orders    sales_orders[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model vendor_bill_items {
+  id           String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  bill_id      String       @db.Uuid
+  product_id   String       @db.Uuid
+  description  String?
+  quantity     Decimal      @db.Decimal(15, 3)
+  unit_price   Decimal      @db.Decimal(15, 2)
+  tax_id       String?      @db.Uuid
+  tax_amount   Decimal      @default(0) @db.Decimal(15, 2)
+  line_total   Decimal      @default(0) @db.Decimal(15, 2)
+  vendor_bills vendor_bills @relation(fields: [bill_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  products     products     @relation(fields: [product_id], references: [id], onUpdate: NoAction)
+  taxes        taxes?       @relation(fields: [tax_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model vendor_bills {
+  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  bill_number       String              @unique @db.VarChar(50)
+  vendor_id         String              @db.Uuid
+  purchase_order_id String?             @db.Uuid
+  bill_date         DateTime            @default(dbgenerated("CURRENT_DATE")) @db.Date
+  due_date          DateTime            @db.Date
+  subtotal          Decimal             @default(0) @db.Decimal(15, 2)
+  tax_amount        Decimal             @default(0) @db.Decimal(15, 2)
+  total_amount      Decimal             @default(0) @db.Decimal(15, 2)
+  paid_amount       Decimal             @default(0) @db.Decimal(15, 2)
+  status            String              @default("DRAFT") @db.VarChar(20)
+  journal_entry_id  String?             @db.Uuid
+  created_at        DateTime            @default(now()) @db.Timestamp(6)
+  updated_at        DateTime            @default(now()) @db.Timestamp(6)
+  payments          payments[]
+  vendor_bill_items vendor_bill_items[]
+  journal_entries   journal_entries?    @relation(fields: [journal_entry_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  purchase_orders   purchase_orders?    @relation(fields: [purchase_order_id], references: [id], onDelete: Restrict, onUpdate: NoAction)
+  contacts          contacts            @relation(fields: [vendor_id], references: [id], onUpdate: NoAction)
+
+  @@index([vendor_id], map: "idx_vendor_bills_vendor")
+}
