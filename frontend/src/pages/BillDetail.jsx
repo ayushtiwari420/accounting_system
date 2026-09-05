@@ -31,7 +31,10 @@ const BillDetail = () => {
     try {
       setLoading(true);
       const res = await api.get(`/bills/${id}`);
-      const billData = res.data.data;
+      const billData = res.data?.data || res.data;
+      if (!billData) {
+        throw new Error("Vendor bill data is empty");
+      }
       setBill(billData);
 
       const total = Number(billData.total_amount || 0);
@@ -41,7 +44,7 @@ const BillDetail = () => {
       setPaymentForm((prev) => ({
         ...prev,
         amount: remaining.toFixed(2),
-        reference: `Payment for Bill ${billData.bill_number}`,
+        reference: `Payment for Bill ${billData.bill_number || 'Ref'}`,
       }));
     } catch (err) {
       console.error("Error fetching vendor bill:", err);

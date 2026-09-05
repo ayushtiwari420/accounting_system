@@ -27,7 +27,8 @@ const SalesOrderDetail = () => {
     try {
       setLoading(true);
       const res = await api.get(`/sales-orders/${id}`);
-      setSalesOrder(res.data.data);
+      const soData = res.data?.data || res.data;
+      setSalesOrder(soData);
     } catch (err) {
       console.error("Error fetching sales order:", err);
       setError(err.response?.data?.message || "Sales order not found");

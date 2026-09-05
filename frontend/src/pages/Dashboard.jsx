@@ -344,14 +344,14 @@ const Dashboard = () => {
           <div className="flex flex-wrap gap-2.5 shrink-0">
             <Link
               to="/products"
-              className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md"
+              className="inline-flex items-center space-x-2 bg-[#1E3A8A] hover:bg-[#152e70] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-xs"
             >
               <i className="fa-solid fa-couch"></i>
               <span>Browse Products Catalog</span>
             </Link>
             <Link
               to="/invoices"
-              className="inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md"
+              className="inline-flex items-center space-x-2 bg-white hover:bg-slate-50 text-[#1E3A8A] border border-[#1E3A8A] font-bold text-xs px-4 py-2.5 rounded-xl transition-all"
             >
               <i className="fa-solid fa-credit-card"></i>
               <span>Pay My Invoices</span>
@@ -368,12 +368,12 @@ const Dashboard = () => {
       >
         <div>
           <div className="flex items-center space-x-2 mb-1">
-            <span className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping"></span>
-            <span className="text-xs font-extrabold text-blue-900 uppercase tracking-widest">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#1E3A8A] animate-ping"></span>
+            <span className="text-xs font-extrabold text-[#1E3A8A] uppercase tracking-widest">
               {isContactUser ? "BUSINESS OVERVIEW & TRANSACTIONS" : "EXECUTIVE COMMAND CENTER"}
             </span>
           </div>
-          <h1 className="text-[32px] font-bold leading-[1.2] text-blue-950">Urban Furniture ERP Overview</h1>
+          <h1 className="text-[32px] font-bold leading-[1.2] text-[#1E3A8A]">Urban Furniture ERP Overview</h1>
           <p className="text-sm font-normal text-slate-500 mt-1">
             Real-time business operations, double-entry ledgers, and live transaction booking studio.
           </p>
@@ -385,9 +385,9 @@ const Dashboard = () => {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => setShowSaleModal(true)}
-            className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md shadow-blue-100"
+            className="inline-flex items-center space-x-2 bg-[#1E3A8A] hover:bg-[#152e70] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-xs"
           >
-            <i className="fa-solid fa-bolt text-yellow-300"></i>
+            <i className="fa-solid fa-bolt"></i>
             <span>Book Sale Transaction</span>
           </motion.button>
 
@@ -395,17 +395,17 @@ const Dashboard = () => {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => setShowPurchaseModal(true)}
-            className="inline-flex items-center space-x-2 bg-blue-900 hover:bg-blue-950 text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-md"
+            className="inline-flex items-center space-x-2 bg-[#1E3A8A] hover:bg-[#152e70] text-white font-bold text-xs px-4 py-2.5 rounded-xl transition-all shadow-xs"
           >
-            <i className="fa-solid fa-cart-shopping text-blue-200"></i>
+            <i className="fa-solid fa-cart-shopping"></i>
             <span>Book Purchase Transaction</span>
           </motion.button>
 
           <Link
             to="/reports"
-            className="inline-flex items-center space-x-2 bg-blue-50 hover:bg-blue-100 text-blue-900 font-bold text-xs px-4 py-2.5 rounded-xl transition-all border border-blue-200"
+            className="inline-flex items-center space-x-2 bg-white hover:bg-slate-50 text-[#1E3A8A] font-bold text-xs px-4 py-2.5 rounded-xl transition-all border border-[#1E3A8A]"
           >
-            <i className="fa-solid fa-chart-line text-blue-600"></i>
+            <i className="fa-solid fa-chart-line text-[#1E3A8A]"></i>
             <span>View P&L Statements</span>
           </Link>
         </div>
@@ -442,65 +442,65 @@ const Dashboard = () => {
         {/* Money Received (Inflow) */}
         <motion.div
           whileHover={{ y: -3 }}
-          className="bg-emerald-900 text-white p-5 rounded-2xl border border-emerald-800 shadow-md space-y-2 relative overflow-hidden"
+          className="bg-[#1E3A8A] text-white p-5 rounded-2xl border border-[#1E3A8A] shadow-sm space-y-2 relative overflow-hidden"
         >
-          <div className="flex items-center justify-between text-emerald-200">
+          <div className="flex items-center justify-between text-blue-100">
             <span className="text-xs font-bold uppercase tracking-wider">Money Inflow (Collected)</span>
-            <i className="fa-solid fa-[#10b981] fa-arrow-down-left text-emerald-400 text-base"></i>
+            <i className="fa-solid fa-arrow-down-left text-white text-base"></i>
           </div>
           <div className="text-2xl font-black text-white font-mono">
             ₹{metrics.totalMoneyCollected.toLocaleString()}
           </div>
-          <p className="text-[11px] text-emerald-200 font-medium">Actual Customer Cash & Bank Payments</p>
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-emerald-400"></div>
+          <p className="text-[11px] text-blue-100 font-medium">Actual Customer Cash & Bank Payments</p>
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-white opacity-40"></div>
         </motion.div>
 
         {/* Money Paid Out (Outflow) */}
         <motion.div
           whileHover={{ y: -3 }}
-          className="bg-rose-900 text-white p-5 rounded-2xl border border-rose-800 shadow-md space-y-2 relative overflow-hidden"
+          className="bg-white text-[#1E3A8A] p-5 rounded-2xl border border-[#1E3A8A] shadow-sm space-y-2 relative overflow-hidden"
         >
-          <div className="flex items-center justify-between text-rose-200">
+          <div className="flex items-center justify-between text-[#1E3A8A]">
             <span className="text-xs font-bold uppercase tracking-wider">Money Outflow (Disbursed)</span>
-            <i className="fa-solid fa-arrow-up-right text-rose-400 text-base"></i>
+            <i className="fa-solid fa-arrow-up-right text-[#1E3A8A] text-base"></i>
           </div>
-          <div className="text-2xl font-black text-white font-mono">
+          <div className="text-2xl font-black text-[#1E3A8A] font-mono">
             ₹{metrics.totalMoneyDisbursed.toLocaleString()}
           </div>
-          <p className="text-[11px] text-rose-200 font-medium">Actual Vendor Cash & Bank Disbursements</p>
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-rose-400"></div>
+          <p className="text-[11px] text-slate-500 font-medium">Actual Vendor Cash & Bank Disbursements</p>
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#1E3A8A]"></div>
         </motion.div>
 
         {/* Liquid Cash Funds */}
         <motion.div
           whileHover={{ y: -3 }}
-          className="bg-blue-950 text-white p-5 rounded-2xl border border-blue-900 shadow-md space-y-2 relative overflow-hidden"
+          className="bg-[#1E3A8A] text-white p-5 rounded-2xl border border-[#1E3A8A] shadow-sm space-y-2 relative overflow-hidden"
         >
-          <div className="flex items-center justify-between text-blue-200">
+          <div className="flex items-center justify-between text-blue-100">
             <span className="text-xs font-bold uppercase tracking-wider">Liquid Funds (Bank & Cash)</span>
-            <i className="fa-solid fa-wallet text-blue-400 text-base"></i>
+            <i className="fa-solid fa-wallet text-white text-base"></i>
           </div>
           <div className="text-2xl font-black text-white font-mono">
             ₹{metrics.bankCashLiquidBalance.toLocaleString()}
           </div>
-          <p className="text-[11px] text-blue-200 font-medium">1000 Cash + 1010 Bank Account Funds</p>
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-blue-400"></div>
+          <p className="text-[11px] text-blue-100 font-medium">1000 Cash + 1010 Bank Account Funds</p>
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-white opacity-40"></div>
         </motion.div>
 
         {/* Net Profit */}
         <motion.div
           whileHover={{ y: -3 }}
-          className="bg-slate-900 text-white p-5 rounded-2xl border border-slate-800 shadow-md space-y-2 relative overflow-hidden"
+          className="bg-white text-[#1E3A8A] p-5 rounded-2xl border border-[#1E3A8A] shadow-sm space-y-2 relative overflow-hidden"
         >
-          <div className="flex items-center justify-between text-slate-300">
+          <div className="flex items-center justify-between text-[#1E3A8A]">
             <span className="text-xs font-bold uppercase tracking-wider">Net Operating Profit</span>
-            <i className="fa-solid fa-scale-balanced text-blue-400 text-base"></i>
+            <i className="fa-solid fa-scale-balanced text-[#1E3A8A] text-base"></i>
           </div>
-          <div className={`text-2xl font-black font-mono ${metrics.netProfit >= 0 ? "text-emerald-400" : "text-rose-400"}`}>
+          <div className="text-2xl font-black font-mono text-[#1E3A8A]">
             ₹{metrics.netProfit.toLocaleString()}
           </div>
-          <p className="text-[11px] text-slate-400 font-medium">Revenue (4000) - Expense (5000)</p>
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-500"></div>
+          <p className="text-[11px] text-slate-500 font-medium">Revenue (4000) - Expense (5000)</p>
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#1E3A8A]"></div>
         </motion.div>
       </div>
 
@@ -511,7 +511,7 @@ const Dashboard = () => {
             <span className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">Invoiced Revenue</span>
             <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">₹{metrics.totalRevenue.toLocaleString()}</div>
           </div>
-          <span className="p-2.5 bg-emerald-50 text-emerald-700 rounded-xl font-bold text-xs border border-emerald-200">
+          <span className="p-2.5 bg-white text-[#1E3A8A] rounded-xl font-bold text-xs border border-[#1E3A8A]">
             Account 4000
           </span>
         </div>
@@ -521,7 +521,7 @@ const Dashboard = () => {
             <span className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">Billed Expenses</span>
             <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">₹{metrics.totalExpense.toLocaleString()}</div>
           </div>
-          <span className="p-2.5 bg-rose-50 text-rose-700 rounded-xl font-bold text-xs border border-rose-200">
+          <span className="p-2.5 bg-white text-[#1E3A8A] rounded-xl font-bold text-xs border border-[#1E3A8A]">
             Account 5000
           </span>
         </div>
@@ -531,7 +531,7 @@ const Dashboard = () => {
             <span className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">Receivables (AR)</span>
             <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">₹{metrics.arAmount.toLocaleString()}</div>
           </div>
-          <span className="p-2.5 bg-blue-50 text-blue-700 rounded-xl font-bold text-xs border border-blue-200">
+          <span className="p-2.5 bg-white text-[#1E3A8A] rounded-xl font-bold text-xs border border-[#1E3A8A]">
             Uncollected
           </span>
         </div>
@@ -541,7 +541,7 @@ const Dashboard = () => {
             <span className="text-[11px] font-extrabold uppercase text-slate-400 tracking-wider">Payables (AP)</span>
             <div className="text-lg font-bold text-slate-900 font-mono mt-0.5">₹{metrics.apAmount.toLocaleString()}</div>
           </div>
-          <span className="p-2.5 bg-amber-50 text-amber-800 rounded-xl font-bold text-xs border border-amber-200">
+          <span className="p-2.5 bg-white text-[#1E3A8A] rounded-xl font-bold text-xs border border-[#1E3A8A]">
             Unpaid Bills
           </span>
         </div>
@@ -694,8 +694,8 @@ const Dashboard = () => {
                           <span
                             className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-extrabold uppercase ${
                               isInbound
-                                ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
-                                : "bg-rose-100 text-rose-800 border border-rose-200"
+                                ? "bg-[#1E3A8A] text-white border border-[#1E3A8A]"
+                                : "bg-white text-[#1E3A8A] border border-[#1E3A8A]"
                             }`}
                           >
                             {isInbound ? "↑ Customer Inflow" : "↓ Vendor Outflow"}
@@ -707,9 +707,7 @@ const Dashboard = () => {
                           {p.payment_method === "CASH" ? "1000 Cash" : "1010 Bank"}
                         </td>
                         <td
-                          className={`py-2.5 px-3 text-right font-mono font-black text-sm ${
-                            isInbound ? "text-emerald-600" : "text-rose-600"
-                          }`}
+                          className="py-2.5 px-3 text-right font-mono font-black text-sm text-[#1E3A8A]"
                         >
                           {isInbound ? "+" : "-"}₹{Number(p.amount || 0).toLocaleString()}
                         </td>

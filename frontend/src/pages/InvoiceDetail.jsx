@@ -31,7 +31,10 @@ const InvoiceDetail = () => {
     try {
       setLoading(true);
       const res = await api.get(`/invoices/${id}`);
-      const invData = res.data.data;
+      const invData = res.data?.data || res.data;
+      if (!invData) {
+        throw new Error("Invoice data is empty");
+      }
       setInvoice(invData);
 
       const total = Number(invData.total_amount || 0);
@@ -41,7 +44,7 @@ const InvoiceDetail = () => {
       setPaymentForm((prev) => ({
         ...prev,
         amount: remaining.toFixed(2),
-        reference: `Payment for ${invData.invoice_number}`,
+        reference: `Payment for ${invData.invoice_number || 'Invoice'}`,
       }));
     } catch (err) {
       console.error("Error fetching invoice:", err);

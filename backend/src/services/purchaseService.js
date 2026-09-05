@@ -68,6 +68,8 @@ export const createPurchaseOrder = async (data, userId) => {
       });
     }
 
+    const totalAmount = subtotal + taxAmount;
+
     const count = await tx.purchase_orders.count();
     const orderNumber = `PO-2026-${String(count + 1).padStart(3, "0")}`;
     const orderDate = data.order_date

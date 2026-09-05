@@ -27,7 +27,8 @@ const PurchaseOrderDetail = () => {
     try {
       setLoading(true);
       const res = await api.get(`/purchase-orders/${id}`);
-      setPurchaseOrder(res.data.data);
+      const poData = res.data?.data || res.data;
+      setPurchaseOrder(poData);
     } catch (err) {
       console.error("Error fetching purchase order:", err);
       setError(err.response?.data?.message || "Purchase order not found");

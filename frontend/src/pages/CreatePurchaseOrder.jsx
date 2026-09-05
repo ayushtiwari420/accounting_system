@@ -15,13 +15,21 @@ const CreatePurchaseOrder = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
-  // Quick Vendor Modal state
+  // Quick Vendor & Product Modal state
   const [showVendorModal, setShowVendorModal] = useState(false);
   const [newVendorForm, setNewVendorForm] = useState({
     name: "",
     email: "",
     mobile: "",
     type: "VENDOR",
+  });
+
+  const [showProductModal, setShowProductModal] = useState(false);
+  const [newProductForm, setNewProductForm] = useState({
+    name: "",
+    purchase_price: 3000,
+    sales_price: 5000,
+    category: "Office Furniture",
   });
 
   const [formData, setFormData] = useState({
@@ -43,10 +51,10 @@ const CreatePurchaseOrder = () => {
         api.get("/products"),
       ]);
 
-      const allContacts = contactsRes.data.data || [];
+      const allContacts = contactsRes.data?.data || (Array.isArray(contactsRes.data) ? contactsRes.data : []);
       setVendors(allContacts);
 
-      const prodList = productsRes.data.data || [];
+      const prodList = productsRes.data?.data || (Array.isArray(productsRes.data) ? productsRes.data : []);
       setProducts(prodList);
 
       const firstVendor =
@@ -80,6 +88,29 @@ const CreatePurchaseOrder = () => {
     } catch (err) {
       console.error("Error creating vendor:", err);
       alert(err.response?.data?.message || "Failed to create new vendor");
+    }
+  };
+
+  const handleQuickAddProduct = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await api.post("/products", newProductForm);
+      const createdProd = res.data?.data || res.data;
+      if (createdProd?.id) {
+        setProducts((prev) => [createdProd, ...prev]);
+        // Set on first line or active line
+        setLines((prevLines) => {
+          const updated = [...prevLines];
+          updated[0].product_id = createdProd.id;
+          updated[0].unit_price = Number(createdProd.purchase_price || createdProd.cost || 0);
+          return updated;
+        });
+        setShowProductModal(false);
+        setNewProductForm({ name: "", purchase_price: 3000, sales_price: 5000, category: "Office Furniture" });
+      }
+    } catch (err) {
+      console.error("Error creating product:", err);
+      alert(err.response?.data?.message || "Failed to create new product");
     }
   };
 
@@ -266,20 +297,20 @@ const CreatePurchaseOrder = () => {
         </div>
 
         {/* Auto-Issue Vendor Bill Option Banner */}
-        <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl flex items-center justify-between">
+        <div className="bg-white border border-[#1E3A8A] p-4 rounded-2xl flex items-center justify-between shadow-xs">
           <div className="flex items-center space-x-3">
             <input
               type="checkbox"
               id="autoBill"
               checked={formData.autoBill}
               onChange={(e) => setFormData({ ...formData, autoBill: e.target.checked })}
-              className="w-4 h-4 text-amber-600 rounded focus:ring-amber-500 cursor-pointer"
+              className="w-4 h-4 text-[#1E3A8A] rounded focus:ring-[#1E3A8A] cursor-pointer"
             />
-            <label htmlFor="autoBill" className="text-xs font-extrabold text-amber-950 cursor-pointer">
+            <label htmlFor="autoBill" className="text-xs font-extrabold text-[#1E3A8A] cursor-pointer">
               Auto-Issue Vendor Bill & Post GL Journal Entry (Updates Expense & P&L Immediately)
             </label>
           </div>
-          <span className="text-[10px] font-extrabold bg-amber-100 text-amber-900 px-2 py-0.5 rounded border border-amber-300 uppercase">
+          <span className="text-[10px] font-extrabold bg-[#1E3A8A] text-white px-2 py-0.5 rounded uppercase">
             Recommended
           </span>
         </div>
@@ -287,7 +318,17 @@ const CreatePurchaseOrder = () => {
         {/* Dynamic Items Table */}
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
           <div className="flex items-center justify-between border-b border-slate-200 pb-4">
-            <h3 className="text-base font-extrabold text-slate-900">Procurement Items</h3>
+            <div className="flex items-center space-x-3">
+              <h3 className="text-base font-extrabold text-slate-900">Procurement Items</h3>
+              <button
+                type="button"
+                onClick={() => setShowProductModal(true)}
+                className="text-xs bg-blue-50 text-blue-700 hover:bg-blue-100 font-bold px-2.5 py-1 rounded-lg border border-blue-200 transition-colors flex items-center space-x-1"
+              >
+                <i className="fa-solid fa-plus text-[10px]" />
+                <span>Quick Add New Product</span>
+              </button>
+            </div>
             <button
               type="button"
               onClick={addLine}
@@ -471,6 +512,89 @@ const CreatePurchaseOrder = () => {
               className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-extrabold shadow-md shadow-blue-100"
             >
               Save Vendor & Select &rarr;
+            </button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* Modal for Quick Adding New Product */}
+      <Modal
+        isOpen={showProductModal}
+        onClose={() => setShowProductModal(false)}
+        title="Create & Add New Product"
+      >
+        <form onSubmit={handleQuickAddProduct} className="space-y-4">
+          <div>
+            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+              Product Name *
+            </label>
+            <input
+              type="text"
+              required
+              value={newProductForm.name}
+              onChange={(e) => setNewProductForm({ ...newProductForm, name: e.target.value })}
+              placeholder="e.g. Executive Wooden Chair, Office Desk"
+              className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-semibold focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                Purchase Cost (₹)
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                required
+                value={newProductForm.purchase_price}
+                onChange={(e) => setNewProductForm({ ...newProductForm, purchase_price: Number(e.target.value) })}
+                placeholder="3000"
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-mono font-bold focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+                Selling Price (₹)
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                required
+                value={newProductForm.sales_price}
+                onChange={(e) => setNewProductForm({ ...newProductForm, sales_price: Number(e.target.value) })}
+                placeholder="5000"
+                className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-mono font-bold focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-slate-700 uppercase mb-1">
+              Category
+            </label>
+            <input
+              type="text"
+              value={newProductForm.category}
+              onChange={(e) => setNewProductForm({ ...newProductForm, category: e.target.value })}
+              placeholder="Office Furniture"
+              className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-sm font-semibold focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div className="flex justify-end space-x-3 pt-3 border-t border-slate-200">
+            <button
+              type="button"
+              onClick={() => setShowProductModal(false)}
+              className="px-4 py-2 border border-slate-300 rounded-xl text-slate-700 text-xs font-bold hover:bg-slate-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-extrabold shadow-md shadow-blue-100"
+            >
+              Save Product & Select &rarr;
             </button>
           </div>
         </form>

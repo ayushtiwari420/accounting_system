@@ -24,15 +24,15 @@ const Button = ({
 
   const variantClasses = {
     primary:
-      "bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white shadow-md shadow-blue-100 border border-transparent",
+      "bg-[#1E3A8A] hover:bg-[#152e70] active:bg-[#0f2254] text-white shadow-sm border border-transparent font-bold",
     secondary:
-      "bg-white hover:bg-blue-50 text-blue-600 border border-blue-600 active:bg-blue-100",
+      "bg-white hover:bg-slate-50 text-[#1E3A8A] border border-[#1E3A8A] font-bold",
     outline:
-      "bg-white hover:bg-slate-50 text-slate-700 border border-slate-300",
+      "bg-white hover:bg-slate-50 text-[#1E3A8A] border border-[#1E3A8A] font-bold",
     ghost:
-      "bg-transparent hover:bg-blue-50 text-blue-600 border border-transparent",
+      "bg-transparent hover:bg-slate-100 text-[#1E3A8A] border border-transparent font-bold",
     danger:
-      "bg-rose-600 hover:bg-rose-700 text-white border border-transparent",
+      "bg-[#1E3A8A] hover:bg-[#152e70] text-white border border-transparent font-bold",
   };
 
   return (
