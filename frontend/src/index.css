@@ -6,7 +6,7 @@
 
 body {
   margin: 0;
-  font-family: "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   font-weight: 400;
   color: #0f172a;
   background: #f8fafc;
@@ -15,16 +15,24 @@ body {
   font-feature-settings: "lnum" 1, "tnum" 1;
 }
 
-body, input, button, select, textarea, table {
-  font-family: "Lato", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-variant-numeric: lining-nums tabular-nums;
-  font-feature-settings: "lnum" 1, "tnum" 1;
+/* Global Font Standardisation: Force Lato & Tabular Lining Numerals on ALL elements */
+body, input, button, select, textarea, table, code, pre, span, div, p, a, td, th, label, h1, h2, h3, h4, h5, h6 {
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-variant-numeric: lining-nums tabular-nums !important;
+  font-feature-settings: "lnum" 1, "tnum" 1 !important;
+}
+
+/* Force Tailwind font-mono to use Lato with lining tabular numbers so all numbers and zeroes match */
+.font-mono, font-mono {
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-variant-numeric: lining-nums tabular-nums !important;
+  font-feature-settings: "lnum" 1, "tnum" 1 !important;
 }
 
 /* Enable Lining & Tabular Numerals for Financial Data & Reports */
 .tabular-nums {
-  font-variant-numeric: lining-nums tabular-nums;
-  font-feature-settings: "lnum" 1, "tnum" 1;
+  font-variant-numeric: lining-nums tabular-nums !important;
+  font-feature-settings: "lnum" 1, "tnum" 1 !important;
 }
 
 /* ==========================================================================
