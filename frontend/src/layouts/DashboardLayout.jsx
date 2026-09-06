@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import Sidebar from "../components/Sidebar.jsx";
+import AIChatAssistant from "../components/AIChatAssistant.jsx";
 
 const DashboardLayout = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -18,6 +19,7 @@ const DashboardLayout = () => {
           <Outlet />
         </main>
       </div>
+      <AIChatAssistant />
     </div>
   );
 };

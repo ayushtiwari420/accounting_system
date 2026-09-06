@@ -1,0 +1,222 @@
+{
+  "system_info": {
+    "name": "Finora Financial ERP",
+    "domain": "Urban Furniture Manufacturing & Sourcing Enterprise Accounting",
+    "architecture": "React 18 + Vite, Tailwind CSS, Node.js Express, PostgreSQL (19 tables)"
+  },
+  "definitions": [
+    {
+      "term": "Journals (Why they exist)",
+      "route": "/journals",
+      "definition": "Journals (Sales SJ, Purchase PJ, Cash CJ, Bank BJ) exist in Finora ERP to categorize and record financial transactions chronologically before posting to the General Ledger. They ensure clean audit trails, organize transaction types, and prevent clutter in General Ledger accounts."
+    },
+    {
+      "term": "Chart of Accounts (CoA)",
+      "route": "/accounts",
+      "definition": "The organized structure of financial accounts in Finora ERP categorized by Assets (1000-1200), Liabilities (2000-2200), Equity (3000), Revenue (4000), and Expenses (5000-5100)."
+    },
+    {
+      "term": "Double-Entry Accounting (Why it is used)",
+      "route": "/journal-entries",
+      "definition": "Double-entry accounting is used in Finora ERP to guarantee mathematical precision and prevent fraud. Every transaction records equal total debits and credits so Assets always equal Liabilities plus Equity."
+    },
+    {
+      "term": "Accounts Receivable (Account 1100)",
+      "route": "/invoices",
+      "definition": "Asset account in Finora ERP tracking outstanding unpaid customer balances for delivered furniture sales orders."
+    },
+    {
+      "term": "Accounts Payable (Account 2000)",
+      "route": "/bills",
+      "definition": "Liability account in Finora ERP tracking amounts owed to raw material and hardware suppliers for posted vendor bills."
+    },
+    {
+      "term": "Cost of Goods Sold / COGS (Account 5000)",
+      "route": "/bills",
+      "definition": "Direct cost of raw materials (teak wood, steel, hardware) debited when vendor bills are posted in Finora ERP."
+    },
+    {
+      "term": "Customer Invoices (Why create invoices)",
+      "route": "/invoices",
+      "definition": "Invoices act as official legal claims for payment in Finora ERP. Posting an invoice recognizes revenue (Account 4000) and registers Accounts Receivable (Account 1100) balance."
+    },
+    {
+      "term": "Vendor Bills (Why record vendor bills)",
+      "route": "/bills",
+      "definition": "Vendor Bills record inventory purchases and supplier debts in Finora ERP. Posting credits Accounts Payable (2000) and debits COGS/Expense (5000) to accurately compute Gross Margin %."
+    },
+    {
+      "term": "Analytic Accounts & Cost Centers (Why use cost centers)",
+      "route": "/analytic-accounts",
+      "definition": "Analytic Accounts enable project-level and department-level profit/loss tracking (e.g. Commercial Projects vs Workshop Ops) without cluttering the main Chart of Accounts."
+    },
+    {
+      "term": "Budgets & Variance (Why set budgets)",
+      "route": "/budgets",
+      "definition": "Budgets set spending caps for accounts and cost centers in Finora ERP to prevent overspending and monitor financial variance percentage in real-time."
+    },
+    {
+      "term": "Profit & Loss (P&L) Statement (Why view P&L)",
+      "route": "/reports",
+      "definition": "The P&L Statement measures company profitability over specific periods (1 Month, 6 Months, 1 Year) by calculating Gross Profit Margin % and Net Profit Margin %."
+    },
+    {
+      "term": "Database Architecture Inspector",
+      "route": "/database-architecture",
+      "definition": "Live schema diagnostic tool in Finora ERP displaying row counts, column schemas, and foreign keys for all 19 PostgreSQL tables."
+    }
+  ],
+  "tools": [
+    {
+      "tool_name": "Journals Management",
+      "route": "/journals",
+      "purpose": "Why use Journals: Categorize transactions into Sales (SJ), Purchase (PJ), Cash (CJ), and Bank (BJ) books for audited double-entry ledger posting.",
+      "steps": [
+        "Step 1: Go to Journals (/journals).",
+        "Step 2: Select target journal (Sales, Purchase, Cash, or Bank).",
+        "Step 3: Review itemized posted transactions and journal balances."
+      ]
+    },
+    {
+      "tool_name": "Dashboard",
+      "route": "/",
+      "purpose": "Overview of key financial metrics: Total Revenue, Expenses, Net Operating Profit, recent invoices, and pending vendor bills.",
+      "steps": [
+        "Step 1: Go to Dashboard (/).",
+        "Step 2: Inspect KPI metric cards for Revenue, Expenses, and Net Profit.",
+        "Step 3: Review live customer transactions and vendor bill status badges."
+      ]
+    },
+    {
+      "tool_name": "Sales Orders",
+      "route": "/sales-orders",
+      "purpose": "Create, manage, and confirm customer furniture sales orders.",
+      "steps": [
+        "Step 1: Go to Sales Orders (/sales-orders).",
+        "Step 2: Click + Create Sales Order button.",
+        "Step 3: Select Customer contact, set order date, and add furniture line items with quantities and unit prices.",
+        "Step 4: Click Confirm Sales Order to convert quote to an active sales order."
+      ]
+    },
+    {
+      "tool_name": "Customer Invoices",
+      "route": "/invoices",
+      "purpose": "Generate customer invoices, post to General Ledger, and collect payments.",
+      "steps": [
+        "Step 1: Go to Customer Invoices (/invoices).",
+        "Step 2: Click + Create Invoice or convert from confirmed Sales Order.",
+        "Step 3: Click Post to debit Accounts Receivable (1100) and credit Sales Revenue (4000).",
+        "Step 4: Record payments under Customer Payments (/payments?type=customer)."
+      ]
+    },
+    {
+      "tool_name": "Purchase Orders",
+      "route": "/purchase-orders",
+      "purpose": "Create purchase orders to suppliers for teak wood, steel, and raw materials.",
+      "steps": [
+        "Step 1: Go to Purchase Orders (/purchase-orders).",
+        "Step 2: Click + Create Purchase Order and select Vendor contact.",
+        "Step 3: Add raw material items, specify unit cost, and save PO."
+      ]
+    },
+    {
+      "tool_name": "Vendor Bills",
+      "route": "/bills",
+      "purpose": "Record and post supplier bills for procurement and COGS tracking.",
+      "steps": [
+        "Step 1: Go to Vendor Bills (/bills).",
+        "Step 2: Click + Record Vendor Bill or convert from Purchase Order.",
+        "Step 3: Click Post to credit Accounts Payable (2000) and debit COGS/Expense (5000).",
+        "Step 4: Record supplier payment under Vendor Payments (/payments?type=vendor)."
+      ]
+    },
+    {
+      "tool_name": "Customer & Vendor Payments",
+      "route": "/payments",
+      "purpose": "Record disbursements to suppliers or receipts from customers.",
+      "steps": [
+        "Step 1: Go to Payments (/payments?type=customer for receipts or /payments?type=vendor for disbursements).",
+        "Step 2: Select Cash (CJ) or Bank (BJ) journal.",
+        "Step 3: Enter payment amount and reconcile against open invoice or vendor bill."
+      ]
+    },
+    {
+      "tool_name": "Chart of Accounts (CoA)",
+      "route": "/accounts",
+      "purpose": "Manage financial account structure and General Ledger account codes.",
+      "steps": [
+        "Step 1: Go to Chart of Accounts (/accounts).",
+        "Step 2: Browse Assets (1000-1200), Liabilities (2000-2200), Equity (3000), Revenue (4000), Expenses (5000-5100).",
+        "Step 3: View current balance and posted GL entries per account."
+      ]
+    },
+    {
+      "tool_name": "Journals & General Ledger Entries",
+      "route": "/journals",
+      "purpose": "Inspect double-entry journal logs and General Ledger postings.",
+      "steps": [
+        "Step 1: Go to Journals (/journals) or Journal Entries (/journal-entries).",
+        "Step 2: Filter by Sales (SJ), Purchase (PJ), Cash (CJ), or Bank (BJ) journal.",
+        "Step 3: Inspect debit and credit balance items for entry codes (JE-2026-*)."
+      ]
+    },
+    {
+      "tool_name": "Analytic Accounts",
+      "route": "/analytic-accounts",
+      "purpose": "Set up cost centers for project-level expense and revenue tracking.",
+      "steps": [
+        "Step 1: Go to Analytic Accounts (/analytic-accounts).",
+        "Step 2: Define cost center (e.g., Commercial Fitouts, Workshop Operations).",
+        "Step 3: Link invoice or bill line items to track net profitability by project."
+      ]
+    },
+    {
+      "tool_name": "Budgets & Planning",
+      "route": "/budgets",
+      "purpose": "Set budget limits and monitor target expenditure vs actual GL spend.",
+      "steps": [
+        "Step 1: Go to Budgets (/budgets).",
+        "Step 2: Define budget targets for target accounts and date ranges.",
+        "Step 3: Monitor live budget variance balance and % utilization progress bars."
+      ]
+    },
+    {
+      "tool_name": "Financial Statements & P&L PDF Export",
+      "route": "/reports",
+      "purpose": "View executive P&L statement, calculate profit margins, and export PDF.",
+      "steps": [
+        "Step 1: Go to Financial Statements (/reports).",
+        "Step 2: Select period preset (Last 1 Month, Last 6 Months, Last 1 Year, All Time).",
+        "Step 3: Inspect KPI cards for Gross Profit Margin % and Net Profit Margin %.",
+        "Step 4: Click Download PDF / Print Statement to export or print executive report."
+      ]
+    },
+    {
+      "tool_name": "Contacts Master Directory",
+      "route": "/contacts",
+      "purpose": "Manage Customer and Vendor master records.",
+      "steps": [
+        "Step 1: Go to Contacts (/contacts).",
+        "Step 2: Add or edit Customer/Vendor with name, phone, email, address, and Tax ID."
+      ]
+    },
+    {
+      "tool_name": "Products & Services Master Catalog",
+      "route": "/products",
+      "purpose": "Manage furniture products and assembly services catalog.",
+      "steps": [
+        "Step 1: Go to Products (/products).",
+        "Step 2: Add or update furniture product (e.g. Teak Dining Table) with price, cost, and SKU."
+      ]
+    },
+    {
+      "tool_name": "Database Architecture Inspector",
+      "route": "/database-architecture",
+      "purpose": "Inspect schema columns, row counts, and foreign keys for all 19 PostgreSQL tables.",
+      "steps": [
+        "Step 1: Go to Database Architecture (/database-architecture).",
+        "Step 2: View live row counts and table schema details for all 19 tables."
+      ]
+    }
+  ]
+}

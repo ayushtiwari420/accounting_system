@@ -173,8 +173,20 @@ export const createInvoiceFromSalesOrder = async (
   });
 };
 
-export const getInvoices = async () => {
+export const getInvoices = async (user) => {
+  const whereClause = {};
+
+  if (user && user.role === "CUSTOMER") {
+    const contact = await prisma.contacts.findFirst({
+      where: { user_id: user.id },
+    });
+    if (contact) {
+      whereClause.customer_id = contact.id;
+    }
+  }
+
   return await prisma.customer_invoices.findMany({
+    where: whereClause,
     orderBy: {
       created_at: "desc",
     },

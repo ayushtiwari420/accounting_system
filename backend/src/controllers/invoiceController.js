@@ -20,7 +20,7 @@ export const createInvoiceFromSalesOrder = asyncHandler(async (req, res) => {
 });
 
 export const getInvoices = asyncHandler(async (req, res) => {
-  const invoices = await invoiceService.getInvoices();
+  const invoices = await invoiceService.getInvoices(req.user);
 
   return successResponse(res, invoices);
 });

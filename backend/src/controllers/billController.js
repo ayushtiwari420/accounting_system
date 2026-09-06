@@ -20,7 +20,7 @@ export const createBillFromPurchaseOrder = asyncHandler(async (req, res) => {
 });
 
 export const getBills = asyncHandler(async (req, res) => {
-  const bills = await billService.getBills();
+  const bills = await billService.getBills(req.user);
 
   return successResponse(res, bills);
 });

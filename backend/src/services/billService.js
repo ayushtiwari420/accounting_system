@@ -162,8 +162,20 @@ export const createBillFromPurchaseOrder = async (
   });
 };
 
-export const getBills = async () => {
+export const getBills = async (user) => {
+  const whereClause = {};
+
+  if (user && user.role === "VENDOR") {
+    const contact = await prisma.contacts.findFirst({
+      where: { user_id: user.id },
+    });
+    if (contact) {
+      whereClause.vendor_id = contact.id;
+    }
+  }
+
   return await prisma.vendor_bills.findMany({
+    where: whereClause,
     orderBy: {
       created_at: "desc",
     },
