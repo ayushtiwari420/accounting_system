@@ -147,6 +147,19 @@ app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`);
+  try {
+    const userCount = await prisma.users.count();
+    if (userCount === 0) {
+      console.log("Empty database detected. Auto-seeding Finora ERP dataset...");
+      const { exec } = await import("child_process");
+      exec("node prisma/seed_urban_furniture_dataset.js", (err, stdout) => {
+        if (err) console.error("Auto-seed error:", err.message);
+        else console.log("Auto-seed output:", stdout);
+      });
+    }
+  } catch (err) {
+    console.error("Startup DB check:", err.message);
+  }
 });

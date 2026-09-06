@@ -43,16 +43,19 @@ async function seedRealWorldDataset() {
 
   // 2. USERS
   console.log("👤 Creating Real Users...");
-  await prisma.users.upsert({
-    where: { email: "admin@finora.com" },
-    update: { password_hash: passwordHash, role: "ADMIN", is_active: true },
-    create: {
-      name: "Admin Business Owner",
-      email: "admin@finora.com",
-      password_hash: passwordHash,
-      role: "ADMIN",
-    },
-  });
+  const adminEmails = ["admin@finora.com", "admin@urbanfurniture.com", "admin@admin.com"];
+  for (const email of adminEmails) {
+    await prisma.users.upsert({
+      where: { email },
+      update: { password_hash: passwordHash, role: "ADMIN", is_active: true },
+      create: {
+        name: "Admin Business Owner",
+        email,
+        password_hash: passwordHash,
+        role: "ADMIN",
+      },
+    });
+  }
 
   const accountantUser = await prisma.users.upsert({
     where: { email: "accountant@finora.com" },
