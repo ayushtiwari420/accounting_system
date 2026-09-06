@@ -1,8 +1,12 @@
 import axios from "axios";
 
-// Using relative /api path so Vite proxy forwards requests seamlessly to http://localhost:5001/api
+const rawBaseUrl = import.meta.env.VITE_API_BASE_URL || "/api";
+const BASE_URL = rawBaseUrl.endsWith("/api")
+  ? rawBaseUrl
+  : `${rawBaseUrl.replace(/\/$/, "")}/api`;
+
 const api = axios.create({
-  baseURL: "/api",
+  baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -43,7 +47,7 @@ api.interceptors.response.use(
       if (storedRefreshToken) {
         try {
           // Attempt token refresh
-          const res = await axios.post("/api/auth/refresh", {
+          const res = await axios.post(`${BASE_URL}/auth/refresh`, {
             refreshToken: storedRefreshToken,
           });
 
